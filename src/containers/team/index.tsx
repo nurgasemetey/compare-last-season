@@ -15,6 +15,7 @@ const matchColumns = [
     title: 'Team',
     dataIndex: 'name',
     key: 'name',
+    width: '40%',
     // render: (text:any) => <a>{text}</a>,
   },
   {
@@ -133,6 +134,42 @@ const lastSeasonData = [
     name: 'Southampton',
     homeScore: '0-2',
     awayScore: '1-4'
+  },
+  {
+    key: '11',
+    name: 'Everton',
+    homeScore: '4-0',
+    awayScore: '3-1'
+  },
+  {
+    key: '12',
+    name: 'Newcastle',
+    homeScore: '1-0',
+    awayScore: '1-0'
+  },
+  {
+    key: '13',
+    name: 'Crystal Palace',
+    homeScore: '2-0',
+    awayScore: '2-3'
+  },
+  {
+    key: '14',
+    name: 'Brighton',
+    homeScore: '2-0',
+    awayScore: '1-1'
+  },
+  {
+    key: '15',
+    name: 'Westham',
+    homeScore: '0-1',
+    awayScore: '3-2'
+  },
+  {
+    key: '16',
+    name: 'Aston Villa',
+    homeScore: '2-1',
+    awayScore: '1-2'
   }
 ];
 const thisSeasonData = [
@@ -194,6 +231,42 @@ const thisSeasonData = [
     key: '10',
     name: 'Southampton',
     homeScore: '3-3',
+    awayScore: ''
+  },
+  {
+    key: '11',
+    name: 'Everton',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '12',
+    name: 'Newcastle',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '13',
+    name: 'Crystal Palace',
+    homeScore: '4-0',
+    awayScore: ''
+  },
+  {
+    key: '14',
+    name: 'Brighton',
+    homeScore: '',
+    awayScore: '1-3'
+  },
+  {
+    key: '15',
+    name: 'Westham',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '16',
+    name: 'Aston Villa',
+    homeScore: '',
     awayScore: ''
   }
 ];
@@ -332,7 +405,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 8 }}
             xl={{ span: 8 }}
           >
-            <Table columns={matchColumns} dataSource={lastSeasonData} pagination={false} />
+            This season
+            <Table columns={matchColumns} dataSource={lastSeasonData} pagination={false} size="small"/>
           </Col>
 
           <Col
@@ -342,7 +416,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 8 }}
             xl={{ span: 8 }}
           >
-            <Table columns={matchColumns} dataSource={thisSeasonData} pagination={false} />
+            Last season
+            <Table columns={matchColumns} dataSource={thisSeasonData} pagination={false} size="small"/>
           </Col>
 
           <Col
@@ -352,7 +427,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 8 }}
             xl={{ span: 8 }}
           >
-            <Table columns={pointChangeColumn} dataSource={pointChangeData} pagination={false} />
+            Point Change
+            <Table columns={pointChangeColumn} dataSource={pointChangeData} pagination={false} size="small"/>
           </Col>
         </Row>
       </div>
