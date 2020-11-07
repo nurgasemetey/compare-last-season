@@ -13,6 +13,8 @@ interface IState {
   pointChangeData: any[]
 }
 
+const isNew = (isNew: boolean) => isNew ? <sup><Text type="danger">New</Text></sup> : null
+
 const matchColumns = [
   {
     title: 'Team',
@@ -43,7 +45,7 @@ const matchColumns = [
             style: { background: color },
             align: 'center'
           },
-          children: <div>{text}</div>
+          children: <div>{text}{isNew(record.isNew)}</div>
         };
       }
 
@@ -72,7 +74,7 @@ const matchColumns = [
             style: { background: color },
             align: 'center'
           },
-          children: <div>{text}</div>
+          children: <div>{text}{isNew(record.isNew)}</div>
         };
       }
     }
@@ -241,7 +243,8 @@ const thisSeasonData = [
     key: '8',
     name: 'Sheffield',
     homeScore: '4-1',
-    awayScore: ''
+    awayScore: '',
+    isNew:true
   },
   {
     key: '9',
