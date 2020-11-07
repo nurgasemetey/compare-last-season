@@ -27,13 +27,13 @@ const matchColumns = [
         const scoreArr: string[] = text.split("-");
         let color = "white";
         if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
-          color = "green";
+          color = "#67AA52";
         }
         else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
-          color = "red";
+          color = "#F92610";
         }
         else {
-          color = "yellow";
+          color = "#EBC73D";
         }
         return {
           props: {
@@ -55,13 +55,13 @@ const matchColumns = [
         const scoreArr: string[] = text.split("-");
         let color = "white";
         if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
-          color = "green";
+          color = "#67AA52";
         }
         else if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
-          color = "red";
+          color = "#F92610";
         }
         else {
-          color = "yellow";
+          color = "#EBC73D";
         }
         return {
           props: {
@@ -316,13 +316,13 @@ const pointChangeColumn = [
       if (value !== -1) {
         let color = "white";
         if (value > 0) {
-          color = "green";
+          color = "#67AA52";
         }
         else if (value < 0) {
-          color = "red";
+          color = "#F92610";
         }
         else {
-          color = "yellow";
+          color = "#EBC73D";
         }
         return {
           props: {
