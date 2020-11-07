@@ -91,6 +91,48 @@ const lastSeasonData = [
     name: 'United',
     homeScore: '0-2',
     awayScore: '4-0'
+  },
+  {
+    key: '4',
+    name: 'Leicester',
+    homeScore: '1-1',
+    awayScore: '2-2'
+  },
+  {
+    key: '5',
+    name: 'Spurs',
+    homeScore: '2-1',
+    awayScore: '0-2'
+  },
+  {
+    key: '6',
+    name: 'Wolves',
+    homeScore: '2-0',
+    awayScore: '2-5'
+  },
+  {
+    key: '7',
+    name: 'Arsenal',
+    homeScore: '2-2',
+    awayScore: '1-2'
+  },
+  {
+    key: '8',
+    name: 'Sheffield',
+    homeScore: '2-2',
+    awayScore: '3-0'
+  },
+  {
+    key: '9',
+    name: 'Burnley',
+    homeScore: '3-0',
+    awayScore: '2-4'
+  },
+  {
+    key: '10',
+    name: 'Southampton',
+    homeScore: '0-2',
+    awayScore: '1-4'
   }
 ];
 const thisSeasonData = [
@@ -107,10 +149,52 @@ const thisSeasonData = [
     awayScore: ''
   },
   {
-    key: '2',
+    key: '3',
     name: 'United',
     homeScore: '',
     awayScore: '0-0'
+  },
+  {
+    key: '4',
+    name: 'Leicester',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '5',
+    name: 'Spurs',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '6',
+    name: 'Wolves',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '7',
+    name: 'Arsenal',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '8',
+    name: 'Sheffield',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '9',
+    name: 'Burnley',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '10',
+    name: 'Southampton',
+    homeScore: '3-3',
+    awayScore: ''
   }
 ];
 
@@ -140,32 +224,17 @@ const pointChangeColumn = [
         };
       }
       else {
-        console.log("null", value)
+        return {
+          props: {
+            style: { background: "white" }
+          },
+          children: <div>Not Played</div>
+        };
       }
     }
   }
 ];
 
-const pointChangeDataNew = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-];
 
 export class TeamContainer extends React.Component<IProps, IState> {
 
@@ -187,49 +256,46 @@ export class TeamContainer extends React.Component<IProps, IState> {
       }
       let lastSeasonTotalPoint = 0;
       let thisSeasonTotalPoint = 0;
-      if (lastSeason.homeScore) {
-        const scoreArr: string[] = lastSeason.homeScore.split("-");
-        if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
+      if (lastSeason.homeScore && thisSeason.homeScore) {
+        const lastSeasonScoreArr: string[] = lastSeason.homeScore.split("-");
+        if (parseInt(lastSeasonScoreArr[0]) > parseInt(lastSeasonScoreArr[1])) {
           lastSeasonTotalPoint += 3;
         }
-        else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
+        else if (parseInt(lastSeasonScoreArr[0]) < parseInt(lastSeasonScoreArr[1])) {
           lastSeasonTotalPoint += 0;
         }
         else {
           lastSeasonTotalPoint += 1;
         }
-      }
-      if (lastSeason.awayScore) {
-        const scoreArr: string[] = lastSeason.awayScore.split("-");
-        if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
-          lastSeasonTotalPoint += 0;
-        }
-        else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
-          lastSeasonTotalPoint += 3;
-        }
-        else {
-          lastSeasonTotalPoint += 1;
-        }
-      }
 
-      if (thisSeason.homeScore) {
-        const scoreArr: string[] = thisSeason.homeScore.split("-");
-        if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
+        const thisSeasonScoreArr: string[] = thisSeason.homeScore.split("-");
+        if (parseInt(thisSeasonScoreArr[0]) > parseInt(thisSeasonScoreArr[1])) {
           thisSeasonTotalPoint += 3;
         }
-        else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
+        else if (parseInt(thisSeasonScoreArr[0]) < parseInt(thisSeasonScoreArr[1])) {
           thisSeasonTotalPoint += 0;
         }
         else {
           thisSeasonTotalPoint += 1;
         }
       }
-      if (thisSeason.awayScore) {
-        const scoreArr: string[] = thisSeason.awayScore.split("-");
-        if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
+      if (lastSeason.awayScore && thisSeason.awayScore) {
+        const lastSeasonScoreArr: string[] = lastSeason.awayScore.split("-");
+        if (parseInt(lastSeasonScoreArr[0]) > parseInt(lastSeasonScoreArr[1])) {
+          lastSeasonTotalPoint += 0;
+        }
+        else if (parseInt(lastSeasonScoreArr[0]) < parseInt(lastSeasonScoreArr[1])) {
+          lastSeasonTotalPoint += 3;
+        }
+        else {
+          lastSeasonTotalPoint += 1;
+        }
+
+        const thisSeasonScoreArr: string[] = thisSeason.awayScore.split("-");
+        if (parseInt(thisSeasonScoreArr[0]) > parseInt(thisSeasonScoreArr[1])) {
           thisSeasonTotalPoint += 0;
         }
-        else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
+        else if (parseInt(thisSeasonScoreArr[0]) < parseInt(thisSeasonScoreArr[1])) {
           thisSeasonTotalPoint += 3;
         }
         else {
