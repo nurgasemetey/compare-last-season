@@ -1,7 +1,10 @@
 import React from 'react';
-import { Row, Col, PageHeader, Table } from 'antd';
+import { Row, Col, PageHeader, Table, Typography } from 'antd';
 
 import './styles.less';
+
+const { Text } = Typography;
+
 
 interface IProps { }
 
@@ -441,7 +444,58 @@ export class TeamContainer extends React.Component<IProps, IState> {
             xl={{ span: 7 }}
           >
             
-            <Table title={(data:any)=> "This season 19-20"} bordered columns={matchColumns} dataSource={lastSeasonData} pagination={false} size="small"/>
+            <Table 
+              title={(data:any)=> "This season 19-20"} 
+              bordered 
+              columns={matchColumns} 
+              dataSource={lastSeasonData} 
+              pagination={false} 
+              size="small"
+              summary={pageData => {
+                let totalHome = 0;
+                let totalAway = 0;
+        
+                pageData.forEach(({ homeScore, awayScore }) => {
+                  const homeScoreArr: string[] = homeScore.split("-");
+                  if (parseInt(homeScoreArr[0]) > parseInt(homeScoreArr[1])) {
+                    totalHome += 3;
+                  }
+                  else if (parseInt(homeScoreArr[0]) < parseInt(homeScoreArr[1])) {
+                    totalHome += 0;
+                  }
+                  else {
+                    totalHome += 1;
+                  }
+
+                  const awayScoreArr: string[] = awayScore.split("-");
+                  if (parseInt(awayScoreArr[0]) > parseInt(awayScoreArr[1])) {
+                    totalAway += 0;
+                  }
+                  else if (parseInt(awayScoreArr[0]) < parseInt(awayScoreArr[1])) {
+                    totalAway += 3;
+                  }
+                  else {
+                    totalAway += 1;
+                  }
+                });
+        
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell index={0}>
+                        <Text strong>Total</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell index={1}>
+                        <Text strong>{totalHome}</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell index={2}>
+                        <Text strong>{totalAway}</Text>
+                      </Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
+              />
           </Col>
 
           <Col
@@ -451,7 +505,63 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 7 }}
             xl={{ span: 7 }}
           >
-            <Table title={(data:any)=> "Last season 20-21"} bordered columns={matchColumns} dataSource={thisSeasonData} pagination={false} size="small"/>
+            <Table 
+              title={(data:any)=> "Last season 20-21"} 
+              bordered 
+              columns={matchColumns} 
+              dataSource={thisSeasonData} 
+              pagination={false} 
+              size="small"
+              summary={pageData => {
+                let totalHome = 0;
+                let totalAway = 0;
+        
+                pageData.forEach(({ homeScore, awayScore }) => {
+                  if(homeScore) {
+                    const homeScoreArr: string[] = homeScore.split("-");
+                    if (parseInt(homeScoreArr[0]) > parseInt(homeScoreArr[1])) {
+                      totalHome += 3;
+                    }
+                    else if (parseInt(homeScoreArr[0]) < parseInt(homeScoreArr[1])) {
+                      totalHome += 0;
+                    }
+                    else {
+                      totalHome += 1;
+                    }
+                  }
+                  
+                  if(awayScore) {
+                    const awayScoreArr: string[] = awayScore.split("-");
+                    if (parseInt(awayScoreArr[0]) > parseInt(awayScoreArr[1])) {
+                      totalAway += 0;
+                    }
+                    else if (parseInt(awayScoreArr[0]) < parseInt(awayScoreArr[1])) {
+                      totalAway += 3;
+                    }
+                    else {
+                      totalAway += 1;
+                    }
+                  }
+                  
+                });
+        
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell index={0}>
+                        <Text strong>Total</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell index={1}>
+                        <Text strong>{totalHome}</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell index={2}>
+                        <Text strong>{totalAway}</Text>
+                      </Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
+            />
           </Col>
 
           <Col
@@ -462,7 +572,35 @@ export class TeamContainer extends React.Component<IProps, IState> {
             xl={{ span: 7 }}
           >
             
-            <Table title={(data:any)=> "Point Change"} bordered columns={pointChangeColumn} dataSource={pointChangeData} pagination={false} size="small"/>
+            <Table 
+              title={(data:any)=> "Point Change"} 
+              bordered 
+              columns={pointChangeColumn} 
+              dataSource={pointChangeData} 
+              pagination={false} 
+              size="small"
+              summary={pageData => {
+                let totalChange = 0;
+        
+                pageData.forEach(({ pointChange }) => {
+                  if(pointChange !== -1) {
+                    totalChange += pointChange
+                    
+                  }
+                  
+                });
+        
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell index={0}>
+                        <Text strong>{totalChange}</Text>
+                      </Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
+            />
           </Col>
         </Row>
       </div>
