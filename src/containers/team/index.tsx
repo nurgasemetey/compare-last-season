@@ -240,7 +240,7 @@ const thisSeasonData = [
   {
     key: '8',
     name: 'Sheffield',
-    homeScore: '',
+    homeScore: '4-1',
     awayScore: ''
   },
   {
