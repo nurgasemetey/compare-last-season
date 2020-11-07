@@ -493,10 +493,10 @@ export class TeamContainer extends React.Component<IProps, IState> {
                         <Text strong>Total</Text>
                       </Table.Summary.Cell>
                       <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>Points: {totalHome} Points per game: {Math.round((totalHome/19 + Number.EPSILON) * 100) / 100}</Text>
+                        <Text strong>{totalHome}</Text>
                       </Table.Summary.Cell>
                       <Table.Summary.Cell align="center" index={2}>
-                        <Text strong>Points: {totalAway} Points per game: {Math.round((totalAway/19 + Number.EPSILON) * 100) / 100}</Text>
+                        <Text strong>{totalAway}</Text>
                       </Table.Summary.Cell>
                     </Table.Summary.Row>
                   </>
@@ -521,13 +521,10 @@ export class TeamContainer extends React.Component<IProps, IState> {
               size="small"
               summary={pageData => {
                 let totalHome = 0;
-                let totalHomeCount = 0;
                 let totalAway = 0;
-                let totalAwayCount = 0;
         
                 pageData.forEach(({ homeScore, awayScore }) => {
                   if(homeScore) {
-                    totalHomeCount += 1;
                     const homeScoreArr: string[] = homeScore.split("-");
                     if (parseInt(homeScoreArr[0]) > parseInt(homeScoreArr[1])) {
                       totalHome += 3;
@@ -541,7 +538,6 @@ export class TeamContainer extends React.Component<IProps, IState> {
                   }
                   
                   if(awayScore) {
-                    totalAwayCount += 1;
                     const awayScoreArr: string[] = awayScore.split("-");
                     if (parseInt(awayScoreArr[0]) > parseInt(awayScoreArr[1])) {
                       totalAway += 0;
@@ -563,10 +559,10 @@ export class TeamContainer extends React.Component<IProps, IState> {
                         <Text strong>Total</Text>
                       </Table.Summary.Cell>
                       <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>Points: {totalHome} Points per game: {Math.round((totalHome/totalHomeCount + Number.EPSILON) * 100) / 100}</Text>
+                        <Text strong>{totalHome}</Text>
                       </Table.Summary.Cell>
                       <Table.Summary.Cell align="center" index={2}>
-                        <Text strong>Points: {totalAway} Points per game: {Math.round((totalAway/totalAwayCount + Number.EPSILON) * 100) / 100}</Text>
+                        <Text strong>{totalAway}</Text>
                       </Table.Summary.Cell>
                     </Table.Summary.Row>
                   </>
