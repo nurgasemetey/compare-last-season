@@ -336,7 +336,7 @@ const pointChangeColumn = [
           props: {
             style: { background: "white" }
           },
-          children: <div>Not Played</div>
+          children: <div>-</div>
         };
       }
     }
