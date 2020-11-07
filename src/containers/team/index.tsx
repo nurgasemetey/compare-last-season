@@ -7,7 +7,7 @@ interface IProps { }
 
 
 interface IState {
-  pointChangeData:any[]
+  pointChangeData: any[]
 }
 
 const matchColumns = [
@@ -22,24 +22,27 @@ const matchColumns = [
     dataIndex: 'homeScore',
     key: 'homeScore',
     render(text: string, record: any) {
-      // console.log(text);
-      const scoreArr: string[] = text.split("-");
-      let color = "white";
-      if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
-        color = "green";
+      if (text) {
+        // console.log(text);
+        const scoreArr: string[] = text.split("-");
+        let color = "white";
+        if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
+          color = "green";
+        }
+        else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
+          color = "red";
+        }
+        else {
+          color = "yellow";
+        }
+        return {
+          props: {
+            style: { background: color }
+          },
+          children: <div>{text}</div>
+        };
       }
-      else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
-        color = "red";
-      }
-      else {
-        color = "yellow";
-      }
-      return {
-        props: {
-          style: { background: color }
-        },
-        children: <div>{text}</div>
-      };
+
     }
   },
   {
@@ -76,6 +79,18 @@ const lastSeasonData = [
     name: 'Liverpool',
     homeScore: '1-2',
     awayScore: '5-3'
+  },
+  {
+    key: '2',
+    name: 'City',
+    homeScore: '2-1',
+    awayScore: '2-1'
+  },
+  {
+    key: '3',
+    name: 'United',
+    homeScore: '0-2',
+    awayScore: '4-0'
   }
 ];
 const thisSeasonData = [
@@ -84,6 +99,18 @@ const thisSeasonData = [
     name: 'Liverpool',
     homeScore: '0-2',
     awayScore: ''
+  },
+  {
+    key: '2',
+    name: 'City',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '2',
+    name: 'United',
+    homeScore: '',
+    awayScore: '0-0'
   }
 ];
 
@@ -145,22 +172,22 @@ export class TeamContainer extends React.Component<IProps, IState> {
   state = {
     pointChangeData: []
   }
-  
+
   componentDidMount = async () => {
-    let pointChangeData:any[] = [];
+    let pointChangeData: any[] = [];
     for (let index = 0; index < lastSeasonData.length; index++) {
       const lastSeason = lastSeasonData[index];
       const thisSeason = thisSeasonData[index];
-      if(!lastSeason.homeScore && !lastSeason.awayScore && !thisSeason.homeScore && !thisSeason.awayScore) {
+      if (!thisSeason.homeScore && !thisSeason.awayScore) {
         pointChangeData.push({
-          key: index+1,
+          key: index + 1,
           pointChange: -1
         })
         continue;
       }
       let lastSeasonTotalPoint = 0;
       let thisSeasonTotalPoint = 0;
-      if(lastSeason.homeScore) {
+      if (lastSeason.homeScore) {
         const scoreArr: string[] = lastSeason.homeScore.split("-");
         if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
           lastSeasonTotalPoint += 3;
@@ -172,7 +199,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
           lastSeasonTotalPoint += 1;
         }
       }
-      if(lastSeason.awayScore) {
+      if (lastSeason.awayScore) {
         const scoreArr: string[] = lastSeason.awayScore.split("-");
         if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
           lastSeasonTotalPoint += 0;
@@ -185,7 +212,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
         }
       }
 
-      if(thisSeason.homeScore) {
+      if (thisSeason.homeScore) {
         const scoreArr: string[] = thisSeason.homeScore.split("-");
         if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
           thisSeasonTotalPoint += 3;
@@ -197,7 +224,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
           thisSeasonTotalPoint += 1;
         }
       }
-      if(thisSeason.awayScore) {
+      if (thisSeason.awayScore) {
         const scoreArr: string[] = thisSeason.awayScore.split("-");
         if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
           thisSeasonTotalPoint += 0;
@@ -210,60 +237,60 @@ export class TeamContainer extends React.Component<IProps, IState> {
         }
       }
       pointChangeData.push({
-        key: index+1,
+        key: index + 1,
         pointChange: thisSeasonTotalPoint - lastSeasonTotalPoint
       })
-      
+
     }
-    this.setState({pointChangeData})
+    this.setState({ pointChangeData })
   }
 
   render() {
     const { pointChangeData } = this.state;
     return (
       <div>
-         <PageHeader
-            title="Chelsea"
-            subTitle="Comparison of last and this season"
-          />
-          <Row
-        justify="center"
-        align="middle"
-        gutter={[20, 20]}
-        className="todos-container"
-      >
-        <Col
-          xs={{ span: 24 }}
-          sm={{ span: 12 }}
-          md={{ span: 12 }}
-          lg={{ span: 8 }}
-          xl={{ span: 8 }}
+        <PageHeader
+          title="Chelsea"
+          subTitle="Comparison of last and this season"
+        />
+        <Row
+          justify="center"
+          align="middle"
+          gutter={20}
+          className="todos-container"
         >
-          <Table columns={matchColumns} dataSource={lastSeasonData} pagination={false} />
-        </Col>
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 8 }}
+            xl={{ span: 8 }}
+          >
+            <Table columns={matchColumns} dataSource={lastSeasonData} pagination={false} />
+          </Col>
 
-        <Col
-          xs={{ span: 24 }}
-          sm={{ span: 12 }}
-          md={{ span: 12 }}
-          lg={{ span: 8 }}
-          xl={{ span: 8 }}
-        >
-          <Table columns={matchColumns} dataSource={thisSeasonData} pagination={false} />
-        </Col>
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 8 }}
+            xl={{ span: 8 }}
+          >
+            <Table columns={matchColumns} dataSource={thisSeasonData} pagination={false} />
+          </Col>
 
-        <Col
-          xs={{ span: 24 }}
-          sm={{ span: 12 }}
-          md={{ span: 12 }}
-          lg={{ span: 8 }}
-          xl={{ span: 8 }}
-        >
-          <Table columns={pointChangeColumn} dataSource={pointChangeData} pagination={false} />
-        </Col>
-      </Row>
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 8 }}
+            xl={{ span: 8 }}
+          >
+            <Table columns={pointChangeColumn} dataSource={pointChangeData} pagination={false} />
+          </Col>
+        </Row>
       </div>
-      
+
     )
   }
 
