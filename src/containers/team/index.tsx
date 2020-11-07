@@ -15,7 +15,6 @@ const matchColumns = [
     title: 'Team',
     dataIndex: 'name',
     key: 'name',
-    width: '40%',
     // render: (text:any) => <a>{text}</a>,
   },
   {
@@ -170,6 +169,24 @@ const lastSeasonData = [
     name: 'Aston Villa',
     homeScore: '2-1',
     awayScore: '1-2'
+  },
+  {
+    key: '17',
+    name: 'Bournemouth',
+    homeScore: '0-1',
+    awayScore: '2-2'
+  },
+  {
+    key: '18',
+    name: 'Watford',
+    homeScore: '3-0',
+    awayScore: '1-2'
+  },
+  {
+    key: '19',
+    name: 'Norvich',
+    homeScore: '3-0',
+    awayScore: '1-2'
   }
 ];
 const thisSeasonData = [
@@ -266,6 +283,24 @@ const thisSeasonData = [
   {
     key: '16',
     name: 'Aston Villa',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '17',
+    name: 'Leeds',
+    homeScore: '',
+    awayScore: ''
+  },
+  {
+    key: '18',
+    name: 'West Brom',
+    homeScore: '',
+    awayScore: '3-3'
+  },
+  {
+    key: '19',
+    name: 'Fulham',
     homeScore: '',
     awayScore: ''
   }
@@ -402,33 +437,32 @@ export class TeamContainer extends React.Component<IProps, IState> {
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 8 }}
-            xl={{ span: 8 }}
+            lg={{ span: 7 }}
+            xl={{ span: 7 }}
           >
-            This season
-            <Table columns={matchColumns} dataSource={lastSeasonData} pagination={false} size="small"/>
+            
+            <Table title={(data:any)=> "This season"} bordered={true} columns={matchColumns} dataSource={lastSeasonData} pagination={false} size="small"/>
           </Col>
 
           <Col
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 8 }}
-            xl={{ span: 8 }}
+            lg={{ span: 7 }}
+            xl={{ span: 7 }}
           >
-            Last season
-            <Table columns={matchColumns} dataSource={thisSeasonData} pagination={false} size="small"/>
+            <Table title={(data:any)=> "Last season"} bordered={true} columns={matchColumns} dataSource={thisSeasonData} pagination={false} size="small"/>
           </Col>
 
           <Col
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 8 }}
-            xl={{ span: 8 }}
+            lg={{ span: 7 }}
+            xl={{ span: 7 }}
           >
-            Point Change
-            <Table columns={pointChangeColumn} dataSource={pointChangeData} pagination={false} size="small"/>
+            
+            <Table title={(data:any)=> "Point Change"} bordered={true} columns={pointChangeColumn} dataSource={pointChangeData} pagination={false} size="small"/>
           </Col>
         </Row>
       </div>
