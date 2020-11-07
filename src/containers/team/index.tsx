@@ -242,7 +242,7 @@ const thisSeasonData = [
     key: '9',
     name: 'Burnley',
     homeScore: '',
-    awayScore: ''
+    awayScore: '0-3'
   },
   {
     key: '10',
