@@ -432,7 +432,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
       <div>
         <PageHeader
           title="Chelsea"
-          subTitle="Comparison of last and this season. Last match added: Burnley-Chelsea 2020-10-31"
+          subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
         />
         <Row
           justify="center"
