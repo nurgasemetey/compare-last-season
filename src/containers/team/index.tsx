@@ -40,7 +40,8 @@ const matchColumns = [
         }
         return {
           props: {
-            style: { background: color }
+            style: { background: color },
+            align: 'center'
           },
           children: <div>{text}</div>
         };
@@ -68,7 +69,8 @@ const matchColumns = [
         }
         return {
           props: {
-            style: { background: color }
+            style: { background: color },
+            align: 'center'
           },
           children: <div>{text}</div>
         };
@@ -329,7 +331,8 @@ const pointChangeColumn = [
         }
         return {
           props: {
-            style: { background: color }
+            style: { background: color },
+            align: 'center',
           },
           children: <div>{value}</div>
         };
@@ -337,7 +340,8 @@ const pointChangeColumn = [
       else {
         return {
           props: {
-            style: { background: "white" }
+            style: { background: "white" },
+            align: 'center'
           },
           children: <div>-</div>
         };
@@ -482,13 +486,13 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 return (
                   <>
                     <Table.Summary.Row>
-                      <Table.Summary.Cell index={0}>
+                      <Table.Summary.Cell align="center" index={0}>
                         <Text strong>Total</Text>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={1}>
+                      <Table.Summary.Cell align="center" index={1}>
                         <Text strong>{totalHome}</Text>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={2}>
+                      <Table.Summary.Cell align="center" index={2}>
                         <Text strong>{totalAway}</Text>
                       </Table.Summary.Cell>
                     </Table.Summary.Row>
@@ -548,13 +552,13 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 return (
                   <>
                     <Table.Summary.Row>
-                      <Table.Summary.Cell index={0}>
+                      <Table.Summary.Cell align="center" index={0}>
                         <Text strong>Total</Text>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={1}>
+                      <Table.Summary.Cell align="center" index={1}>
                         <Text strong>{totalHome}</Text>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={2}>
+                      <Table.Summary.Cell align="center" index={2}>
                         <Text strong>{totalAway}</Text>
                       </Table.Summary.Cell>
                     </Table.Summary.Row>
@@ -593,7 +597,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 return (
                   <>
                     <Table.Summary.Row>
-                      <Table.Summary.Cell index={0}>
+                      <Table.Summary.Cell align="center" index={1}>
                         <Text strong>{totalChange}</Text>
                       </Table.Summary.Cell>
                     </Table.Summary.Row>
