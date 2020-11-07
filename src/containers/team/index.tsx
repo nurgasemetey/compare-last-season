@@ -559,7 +559,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
                         <Text strong>Total</Text>
                       </Table.Summary.Cell>
                       <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalHome}</Text>
+                        <Text strong>{totalHome}<Text type="danger">(+3)</Text></Text>
                       </Table.Summary.Cell>
                       <Table.Summary.Cell align="center" index={2}>
                         <Text strong>{totalAway}</Text>
@@ -601,7 +601,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
                   <>
                     <Table.Summary.Row>
                       <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalChange}</Text>
+                        <Text strong>{totalChange}<Text type="danger">(+2)</Text></Text>
                       </Table.Summary.Cell>
                     </Table.Summary.Row>
                   </>
