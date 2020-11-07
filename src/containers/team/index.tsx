@@ -441,7 +441,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             xl={{ span: 7 }}
           >
             
-            <Table title={(data:any)=> "This season"} bordered={true} columns={matchColumns} dataSource={lastSeasonData} pagination={false} size="small"/>
+            <Table title={(data:any)=> "This season 19-20"} bordered={true} columns={matchColumns} dataSource={lastSeasonData} pagination={false} size="small"/>
           </Col>
 
           <Col
@@ -451,7 +451,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 7 }}
             xl={{ span: 7 }}
           >
-            <Table title={(data:any)=> "Last season"} bordered={true} columns={matchColumns} dataSource={thisSeasonData} pagination={false} size="small"/>
+            <Table title={(data:any)=> "Last season 20-21"} bordered={true} columns={matchColumns} dataSource={thisSeasonData} pagination={false} size="small"/>
           </Col>
 
           <Col
