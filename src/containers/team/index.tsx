@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, PageHeader, Table, Typography } from 'antd';
+import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import './styles.less';
 
@@ -352,6 +353,20 @@ const pointChangeColumn = [
     }
   }
 ];
+// const routes = [
+//   {
+//     path: 'index',
+//     breadcrumbName: 'Home',
+//   },
+//   {
+//     path: 'first',
+//     breadcrumbName: 'English Premier League',
+//   },
+//   {
+//     path: 'second',
+//     breadcrumbName: 'Chelsea',
+//   },
+// ];
 
 
 export class TeamContainer extends React.Component<IProps, IState> {
@@ -432,10 +447,28 @@ export class TeamContainer extends React.Component<IProps, IState> {
   render() {
     const { pointChangeData } = this.state;
     return (
-      <div>
+      <>
         <PageHeader
           title="Chelsea"
           subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
+          // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
+          // breadcrumb={{ routes }}
+          extra={[
+            <a 
+              href="https://github.com/nurgasemetey/compare-last-season" 
+              target="_blank" 
+              style={{ fontSize: "24px" }} 
+              >
+              <GithubFilled />
+            </a>,
+            <a 
+              href="https://twitter.com/nurgasemetey" 
+              target="_blank" 
+              style={{ fontSize: "24px" }} 
+            >
+              <TwitterSquareFilled />
+            </a>
+          ]}
         />
         <Row
           justify="center"
@@ -610,7 +643,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             />
           </Col>
         </Row>
-      </div>
+      </>
 
     )
   }
