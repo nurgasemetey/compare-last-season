@@ -461,13 +461,15 @@ export class TeamContainer extends React.Component<IProps, IState> {
           extra={[
             <a 
               href="https://github.com/nurgasemetey/compare-last-season" 
-              target="_blank" 
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ fontSize: "24px" }} 
               >
               <GithubFilled />
             </a>,
             <a 
-              href="https://twitter.com/nurgasemetey" 
+              href="https://twitter.com/nurgasemetey"
+              rel="noopener noreferrer"
               target="_blank" 
               style={{ fontSize: "24px" }} 
             >
