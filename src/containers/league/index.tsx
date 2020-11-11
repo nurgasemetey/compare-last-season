@@ -26,7 +26,7 @@ export class LeagueContainer extends React.Component<IProps, IState> {
 
   componentDidMount = async () => {
     console.log(this.props.match.params.leagueId);
-    const data = require(`../../assets/data/leagues/premier-league/${THIS_SEASON}/teams.json`);
+    const data = require(`../../assets/data/leagues/${this.props.match.params.leagueId}/${THIS_SEASON}/teams.json`);
     // teams.push({
     //   name:"ee"
     // })

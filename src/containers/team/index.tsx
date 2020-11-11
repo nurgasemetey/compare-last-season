@@ -25,7 +25,6 @@ const matchColumns = [
     title: 'Team',
     dataIndex: 'name',
     key: 'name',
-    // render: (text:any) => <a>{text}</a>,
   },
   {
     title: 'Home',
@@ -372,6 +371,8 @@ const pointChangeColumn = [
 //   },
 // ];
 
+const LAST_SEASON = "2019-2020";
+const THIS_SEASON = "2020-2021";
 
 export class TeamContainer extends React.Component<IProps, IState> {
 
@@ -492,7 +493,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
           >
             
             <Table 
-              title={(data:any)=> "Last season 19-20"} 
+              title={(data:any)=> `Last season ${LAST_SEASON}`} 
               bordered 
               columns={matchColumns} 
               dataSource={lastSeasonData} 
@@ -553,7 +554,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             xl={{ span: 9 }}
           >
             <Table 
-              title={(data:any)=> "This season 20-21"} 
+              title={(data:any)=> `This season ${THIS_SEASON}`} 
               bordered 
               columns={matchColumns} 
               dataSource={thisSeasonData} 
