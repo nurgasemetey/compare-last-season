@@ -13,8 +13,6 @@ interface IProps extends RouteComponentProps<RouterProps> {
 interface IState {
 }
 
-const THIS_SEASON = "2020-2021";
-
 export class DashboardContainer extends React.Component<IProps, IState> {
 
   state = {
