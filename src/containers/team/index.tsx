@@ -3,11 +3,15 @@ import { Row, Col, PageHeader, Table, Typography } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import './styles.less';
+import { RouteComponentProps } from 'react-router-dom';
 
 const { Text } = Typography;
+interface RouterProps {
+  leagueId: string,
+  teamId: string
+}
 
-
-interface IProps { }
+interface IProps extends RouteComponentProps<RouterProps> { }
 
 
 interface IState {
@@ -376,6 +380,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
   }
 
   componentDidMount = async () => {
+    console.log(this.props.match.params.leagueId, this.props.match.params.teamId);
     let pointChangeData: any[] = [];
     for (let index = 0; index < lastSeasonData.length; index++) {
       const lastSeason = lastSeasonData[index];
@@ -473,15 +478,15 @@ export class TeamContainer extends React.Component<IProps, IState> {
         <Row
           justify="center"
           align="middle"
-          gutter={20}
+          gutter={[10,0]}
           className="todos-container"
         >
           <Col
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 7 }}
-            xl={{ span: 7 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
           >
             
             <Table 
@@ -542,8 +547,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 7 }}
-            xl={{ span: 7 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
           >
             <Table 
               title={(data:any)=> "This season 20-21"} 
@@ -608,8 +613,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 7 }}
-            xl={{ span: 7 }}
+            lg={{ span: 4 }}
+            xl={{ span: 4 }}
           >
             
             <Table 
