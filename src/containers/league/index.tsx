@@ -28,7 +28,6 @@ export class LeagueContainer extends React.Component<IProps, IState> {
     console.log(this.props.match.params.leagueId);
     const data = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
     const clubSorted = data.clubs.sort((a:any, b:any) => (a.name > b.name) ? 1 : -1)
-
     this.setState({ teams: clubSorted })
   }
 
@@ -57,7 +56,7 @@ export class LeagueContainer extends React.Component<IProps, IState> {
                 // style={{ width: 240 }}
                 bordered={false}
                 onClick={(e: any) => {
-                  this.props.history.push(`/league/${this.props.match.params.leagueId}/team/chelsea`);
+                  this.props.history.push(`/league/${this.props.match.params.leagueId}/team/${team.name}`);
                 }}
               // cover={<img alt="example" src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
               >
