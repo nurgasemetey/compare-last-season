@@ -371,8 +371,8 @@ const pointChangeColumn = [
 //   },
 // ];
 
-const LAST_SEASON = "2019-2020";
-const THIS_SEASON = "2020-2021";
+const LAST_SEASON = "2019-20";
+const THIS_SEASON = "2020-21";
 
 export class TeamContainer extends React.Component<IProps, IState> {
 

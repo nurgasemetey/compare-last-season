@@ -16,7 +16,7 @@ interface IState {
   teams: any[]
 }
 
-const THIS_SEASON = "2020-2021";
+const THIS_SEASON = "2020-21";
 
 export class LeagueContainer extends React.Component<IProps, IState> {
 
@@ -26,12 +26,8 @@ export class LeagueContainer extends React.Component<IProps, IState> {
 
   componentDidMount = async () => {
     console.log(this.props.match.params.leagueId);
-    const data = require(`../../assets/data/leagues/${this.props.match.params.leagueId}/${THIS_SEASON}/teams.json`);
-    // teams.push({
-    //   name:"ee"
-    // })
-    // console.log(data);
-    this.setState({ teams: data })
+    const data = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
+    this.setState({ teams: data.clubs })
   }
 
   render() {
