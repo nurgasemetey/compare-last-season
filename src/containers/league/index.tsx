@@ -1,13 +1,6 @@
 import React from 'react';
 import { Row, Col, Card, PageHeader, Avatar } from 'antd';
 
-import { Todo } from 'store/todo/models/todo.model';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, removeTodo, toggleTodo } from 'store/todo/actions';
-import { RootState } from 'store/todo/reducers';
-import { AddTodoForm } from 'components/AddTodoForm';
-import { TodoList } from 'components/TodoList';
-import { message } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import Meta from 'antd/lib/card/Meta';
 
@@ -33,7 +26,6 @@ export class LeagueContainer extends React.Component<IProps, IState> {
 
   componentDidMount = async () => {
     console.log(this.props.match.params.leagueId);
-    let teams: any[] = [];
     const data = require(`../../assets/data/leagues/premier-league/${THIS_SEASON}/teams.json`);
     // teams.push({
     //   name:"ee"
