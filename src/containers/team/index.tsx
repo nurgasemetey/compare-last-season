@@ -466,7 +466,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 9 }}
             xl={{ span: 9 }}
           >
-            {getMatchTable(thisSeasonPromotedData, `Last season ${LAST_SEASON}`)}
+            {getMatchTable(thisSeasonPromotedData, `This season ${THIS_SEASON}`)}
           </Col>
         </Row>
       </>
