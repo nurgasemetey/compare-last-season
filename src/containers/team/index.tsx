@@ -185,7 +185,6 @@ const getPointChange = (lastSeasonData: any[], thisSeasonData: any) => {
       pointChange: thisSeasonTotalPoint - lastSeasonTotalPoint
     })
   }
-  console.log(pointChangeData);
   return pointChangeData;
 }
 
@@ -352,50 +351,31 @@ export class TeamContainer extends React.Component<IProps, IState> {
               dataSource={lastSeasonData}
               pagination={false}
               size="small"
-            // summary={pageData => {
-            //   let totalHome = 0;
-            //   let totalAway = 0;
+              summary={pageData => {
+                let totalHome = 0;
+                let totalAway = 0;
 
-            //   pageData.forEach(({ homeScore, awayScore }) => {
-            //     const homeScoreArr: string[] = homeScore.split("-");
-            //     if (parseInt(homeScoreArr[0]) > parseInt(homeScoreArr[1])) {
-            //       totalHome += 3;
-            //     }
-            //     else if (parseInt(homeScoreArr[0]) < parseInt(homeScoreArr[1])) {
-            //       totalHome += 0;
-            //     }
-            //     else {
-            //       totalHome += 1;
-            //     }
+                pageData.forEach(({ homeScore, awayScore }) => {
+                  totalHome += getHomePoint(homeScore.score.ft);
+                  totalAway += getAwayPoint(awayScore.score.ft);
+                });
 
-            //     const awayScoreArr: string[] = awayScore.split("-");
-            //     if (parseInt(awayScoreArr[0]) > parseInt(awayScoreArr[1])) {
-            //       totalAway += 0;
-            //     }
-            //     else if (parseInt(awayScoreArr[0]) < parseInt(awayScoreArr[1])) {
-            //       totalAway += 3;
-            //     }
-            //     else {
-            //       totalAway += 1;
-            //     }
-            //   });
-
-            //   return (
-            //     <>
-            //       <Table.Summary.Row>
-            //         <Table.Summary.Cell align="center" index={0}>
-            //           <Text strong>Total</Text>
-            //         </Table.Summary.Cell>
-            //         <Table.Summary.Cell align="center" index={1}>
-            //           <Text strong>{totalHome}</Text>
-            //         </Table.Summary.Cell>
-            //         <Table.Summary.Cell align="center" index={2}>
-            //           <Text strong>{totalAway}</Text>
-            //         </Table.Summary.Cell>
-            //       </Table.Summary.Row>
-            //     </>
-            //   );
-            // }}
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell align="center" index={0}>
+                        <Text strong>Total</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell align="center" index={1}>
+                        <Text strong>{totalHome}</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell align="center" index={2}>
+                        <Text strong>{totalAway}</Text>
+                      </Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
             />
           </Col>
 
