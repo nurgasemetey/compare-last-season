@@ -226,6 +226,49 @@ const getSeasonData = (commonClubs: any[], seasonMatches: any[], teamId: string)
 }
 
 
+const getMatchTable = (seasonData:any) => {
+  return (
+    <Table
+              title={(data: any) => `This season ${THIS_SEASON}`}
+              bordered
+              columns={matchColumns}
+              dataSource={seasonData}
+              pagination={false}
+              size="small"
+              summary={pageData => {
+                let totalHome = 0;
+                let totalAway = 0;
+
+                pageData.forEach(({ homeScore, awayScore }) => {
+                  if (homeScore.score) {
+                    totalHome += getHomePoint(homeScore.score.ft);
+                  }
+                  if (awayScore.score) {
+                    totalAway += getAwayPoint(awayScore.score.ft);
+                  }
+                });
+
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell align="center" index={0}>
+                        <Text strong>Total</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell align="center" index={1}>
+                        <Text strong>{totalHome}</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell align="center" index={2}>
+                        <Text strong>{totalAway}</Text>
+                      </Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
+            />
+  )
+}
+
+
 export class TeamContainer extends React.Component<IProps, IState> {
 
   routes = [
@@ -258,30 +301,32 @@ export class TeamContainer extends React.Component<IProps, IState> {
       const thisSeasonClubs = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`).clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
       const lastSeasonClubs = require(`../../assets/data/${LAST_SEASON}/${this.props.match.params.leagueId}.clubs.json`).clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 
-      // console.log(thisSeasonsClubs);
-
       let commonClubs = _.intersectionBy(lastSeasonClubs, thisSeasonClubs, 'name').filter((element: any) => element.name !== teamId);
 
       let lastSeasonDemotedTeams = _.differenceBy(lastSeasonClubs, thisSeasonClubs, 'name');
-      // console.log(lastSeasonDemotedTeams);
-
       let thisSeasonPromotedTeams = _.differenceBy(thisSeasonClubs, lastSeasonClubs, 'name');
-      // console.log(thisSeasonPromotedTeams);
 
       const lastSeasonMatches = require(`../../assets/data/${LAST_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
         return a.team1 === teamId || a.team2 === teamId;
       });
-      let lastSeasonData: any[] = getSeasonData(commonClubs, lastSeasonMatches, teamId);
-      this.setState({ lastSeasonData });
-
       const thisSeasonMatches = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
         return a.team1 === teamId || a.team2 === teamId;
       });
+
+      let lastSeasonData: any[] = getSeasonData(commonClubs, lastSeasonMatches, teamId);
+      this.setState({ lastSeasonData });
+      
       let thisSeasonData: any[] = getSeasonData(commonClubs, thisSeasonMatches, teamId);
       this.setState({ thisSeasonData });
 
       const pointChangeData = getPointChange(lastSeasonData, thisSeasonData);
-      this.setState({ pointChangeData })
+      this.setState({ pointChangeData });
+
+      let lastSeasonDemotedData: any[] = getSeasonData(lastSeasonDemotedTeams, lastSeasonMatches, teamId);
+      console.log(lastSeasonDemotedData);
+
+      let thisSeasonPromotedData: any[] = getSeasonData(thisSeasonPromotedTeams, thisSeasonMatches, teamId);
+      console.log(thisSeasonPromotedData);
 
     } catch (err) {
       console.log(err);
@@ -343,40 +388,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 9 }}
             xl={{ span: 9 }}
           >
-
-            <Table
-              title={(data: any) => `Last season ${LAST_SEASON}`}
-              bordered
-              columns={matchColumns}
-              dataSource={lastSeasonData}
-              pagination={false}
-              size="small"
-              summary={pageData => {
-                let totalHome = 0;
-                let totalAway = 0;
-
-                pageData.forEach(({ homeScore, awayScore }) => {
-                  totalHome += getHomePoint(homeScore.score.ft);
-                  totalAway += getAwayPoint(awayScore.score.ft);
-                });
-
-                return (
-                  <>
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell align="center" index={0}>
-                        <Text strong>Total</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalHome}</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={2}>
-                        <Text strong>{totalAway}</Text>
-                      </Table.Summary.Cell>
-                    </Table.Summary.Row>
-                  </>
-                );
-              }}
-            />
+            {getMatchTable(lastSeasonData)}
           </Col>
 
           <Col
@@ -386,43 +398,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 9 }}
             xl={{ span: 9 }}
           >
-            <Table
-              title={(data: any) => `This season ${THIS_SEASON}`}
-              bordered
-              columns={matchColumns}
-              dataSource={thisSeasonData}
-              pagination={false}
-              size="small"
-              summary={pageData => {
-                let totalHome = 0;
-                let totalAway = 0;
-
-                pageData.forEach(({ homeScore, awayScore }) => {
-                  if (homeScore.score) {
-                    totalHome += getHomePoint(homeScore.score.ft);
-                  }
-                  if (awayScore.score) {
-                    totalAway += getAwayPoint(awayScore.score.ft);
-                  }
-                });
-
-                return (
-                  <>
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell align="center" index={0}>
-                        <Text strong>Total</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalHome}</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={2}>
-                        <Text strong>{totalAway}</Text>
-                      </Table.Summary.Cell>
-                    </Table.Summary.Row>
-                  </>
-                );
-              }}
-            />
+            {getMatchTable(thisSeasonData)}
           </Col>
 
           <Col
@@ -460,6 +436,22 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 );
               }}
             />
+          </Col>
+        </Row>
+        <Row
+          justify="center"
+          align="middle"
+          gutter={[10, 0]}
+          className="todos-container"
+        >
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
+          >
+
           </Col>
         </Row>
       </>
