@@ -5,6 +5,7 @@ import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 import './styles.less';
 import { RouteComponentProps } from 'react-router-dom';
 import _ from 'lodash';
+import { LEAGUE_MAP } from 'configs/LeagueConstants';
 
 const { Text } = Typography;
 interface RouterProps {
@@ -128,25 +129,26 @@ const pointChangeColumn = [
     }
   }
 ];
-// const routes = [
-//   {
-//     path: 'index',
-//     breadcrumbName: 'Home',
-//   },
-//   {
-//     path: 'first',
-//     breadcrumbName: 'English Premier League',
-//   },
-//   {
-//     path: 'second',
-//     breadcrumbName: 'Chelsea',
-//   },
-// ];
 
 const LAST_SEASON = "2019-20";
 const THIS_SEASON = "2020-21";
 
 export class TeamContainer extends React.Component<IProps, IState> {
+
+  routes = [
+    {
+      path: 'index',
+      breadcrumbName: 'Home',
+    },
+    {
+      path: 'first',
+      breadcrumbName: 'English Premier League',
+    },
+    {
+      path: 'second',
+      breadcrumbName: 'Chelsea',
+    }
+  ]
 
   state = {
     lastSeasonData: [],
@@ -338,13 +340,27 @@ export class TeamContainer extends React.Component<IProps, IState> {
 
   render() {
     const { lastSeasonData, thisSeasonData, pointChangeData } = this.state;
+    
     return (
       <>
         <PageHeader
           title={this.props.match.params.teamId}
           subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
           // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
-          // breadcrumb={{ routes }}
+          breadcrumb={{
+            routes:[{
+              path: '/',
+              breadcrumbName: 'Home',
+            },
+            {
+              path: `/league/${this.props.match.params.leagueId}`,
+              breadcrumbName: LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default",
+            },
+            {
+              path: `/league/${this.props.match.params.leagueId}/team/${this.props.match.params.teamId}`,
+              breadcrumbName: this.props.match.params.teamId,
+            }]
+          }}
           extra={[
             <a 
               href="https://github.com/nurgasemetey/compare-last-season" 
