@@ -190,6 +190,43 @@ const getPointChange = (lastSeasonData: any[], thisSeasonData: any) => {
 }
 
 
+const getSeasonData = (commonClubs: any[], seasonMatches: any[], teamId: string) => {
+
+  let thisSeasonMatchesMap: Map<string, any[]> = new Map();
+
+  for (let index = 0; index < seasonMatches.length; index++) {
+    const element = seasonMatches[index];
+    let key = 'team1';
+    if (element.team1 === teamId) {
+      key = 'team2';
+    }
+    if (thisSeasonMatchesMap.has(element[key])) {
+      let matches: any[] = thisSeasonMatchesMap.get(element[key]) || [];
+      matches?.push(element);
+      thisSeasonMatchesMap.set(element[key], matches);
+    }
+    else {
+      thisSeasonMatchesMap.set(element[key], [element]);
+    }
+  }
+  let thisSeasonData: any[] = [];
+  for (let index = 0; index < commonClubs.length; index++) {
+    const element: any = _.cloneDeep(commonClubs[index]);
+    let matches: any[] = thisSeasonMatchesMap.get(element.name) || [];
+    if (matches[0].team1 === teamId) {
+      element.homeScore = matches[0];
+      element.awayScore = matches[1];
+    }
+    else {
+      element.homeScore = matches[1];
+      element.awayScore = matches[0];
+    }
+    thisSeasonData.push(element)
+  }
+  return thisSeasonData;
+}
+
+
 export class TeamContainer extends React.Component<IProps, IState> {
 
   routes = [
@@ -235,88 +272,13 @@ export class TeamContainer extends React.Component<IProps, IState> {
       const lastSeasonMatches = require(`../../assets/data/${LAST_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
         return a.team1 === teamId || a.team2 === teamId;
       });
-
-      let lastSeasonMatchesMap: Map<string, any[]> = new Map();
-      // console.log(lastSeasonMatches);
-
-      for (let index = 0; index < lastSeasonMatches.length; index++) {
-        const element = lastSeasonMatches[index];
-        let key = 'team1';
-        if (element.team1 === teamId) {
-          key = 'team2';
-        }
-        if (lastSeasonMatchesMap.has(element[key])) {
-          let matches: any[] = lastSeasonMatchesMap.get(element[key]) || [];
-          matches?.push(element);
-          lastSeasonMatchesMap.set(element[key], matches);
-        }
-        else {
-          lastSeasonMatchesMap.set(element[key], [element]);
-        }
-      }
-      let lastSeasonData: any[] = [];
-      // console.log(lastSeasonMatchesMap);
-      for (let index = 0; index < commonClubs.length; index++) {
-        const element: any = _.cloneDeep(commonClubs[index]);
-        // console.log(element.name);
-        let matches: any[] = lastSeasonMatchesMap.get(element.name) || [];
-        // console.log(matches);
-        if (matches[0].team1 === teamId) {
-          element.homeScore = matches[0];
-          element.awayScore = matches[1];
-        }
-        else {
-          element.homeScore = matches[1];
-          element.awayScore = matches[0];
-        }
-        lastSeasonData.push(element)
-      }
+      let lastSeasonData: any[] = getSeasonData(commonClubs, lastSeasonMatches, teamId);
       this.setState({ lastSeasonData });
 
-      //---------
       const thisSeasonMatches = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
         return a.team1 === teamId || a.team2 === teamId;
       });
-
-      // console.log(thisSeasonMatches);
-
-      let thisSeasonMatchesMap: Map<string, any[]> = new Map();
-      // console.log(lastSeasonMatches);
-
-      for (let index = 0; index < thisSeasonMatches.length; index++) {
-        const element = thisSeasonMatches[index];
-        let key = 'team1';
-        if (element.team1 === teamId) {
-          key = 'team2';
-        }
-        if (thisSeasonMatchesMap.has(element[key])) {
-          let matches: any[] = thisSeasonMatchesMap.get(element[key]) || [];
-          matches?.push(element);
-          thisSeasonMatchesMap.set(element[key], matches);
-        }
-        else {
-          thisSeasonMatchesMap.set(element[key], [element]);
-        }
-      }
-      let thisSeasonData: any[] = [];
-      // console.log(lastSeasonMatchesMap);
-      for (let index = 0; index < commonClubs.length; index++) {
-        const element: any = _.cloneDeep(commonClubs[index]);
-        // console.log(element.name);
-        let matches: any[] = thisSeasonMatchesMap.get(element.name) || [];
-        // console.log(matches);
-        if (matches[0].team1 === teamId) {
-          element.homeScore = matches[0];
-          element.awayScore = matches[1];
-        }
-        else {
-          element.homeScore = matches[1];
-          element.awayScore = matches[0];
-        }
-        thisSeasonData.push(element)
-      }
-      // console.log("thisSEason", thisSeasonData);
-
+      let thisSeasonData: any[] = getSeasonData(commonClubs, thisSeasonMatches, teamId);
       this.setState({ thisSeasonData });
 
       const pointChangeData = getPointChange(lastSeasonData, thisSeasonData);
@@ -518,27 +480,27 @@ export class TeamContainer extends React.Component<IProps, IState> {
               dataSource={pointChangeData}
               pagination={false}
               size="small"
-              // summary={pageData => {
-              //   let totalChange = 0;
+            // summary={pageData => {
+            //   let totalChange = 0;
 
-              //   pageData.forEach(({ pointChange }) => {
-              //     if (pointChange !== -1) {
-              //       totalChange += pointChange
+            //   pageData.forEach(({ pointChange }) => {
+            //     if (pointChange !== -1) {
+            //       totalChange += pointChange
 
-              //     }
+            //     }
 
-              //   });
+            //   });
 
-              //   return (
-              //     <>
-              //       <Table.Summary.Row>
-              //         <Table.Summary.Cell align="center" index={1}>
-              //           <Text strong>{totalChange}<Text type="danger">(+2)</Text></Text>
-              //         </Table.Summary.Cell>
-              //       </Table.Summary.Row>
-              //     </>
-              //   );
-              // }}
+            //   return (
+            //     <>
+            //       <Table.Summary.Row>
+            //         <Table.Summary.Cell align="center" index={1}>
+            //           <Text strong>{totalChange}<Text type="danger">(+2)</Text></Text>
+            //         </Table.Summary.Cell>
+            //       </Table.Summary.Row>
+            //     </>
+            //   );
+            // }}
             />
           </Col>
         </Row>
