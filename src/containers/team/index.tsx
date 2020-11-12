@@ -341,7 +341,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
     return (
       <>
         <PageHeader
-          title="Chelsea"
+          title={this.props.match.params.teamId}
           subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
           // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
           // breadcrumb={{ routes }}
