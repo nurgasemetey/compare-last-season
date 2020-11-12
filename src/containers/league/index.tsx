@@ -61,7 +61,7 @@ export class LeagueContainer extends React.Component<IProps, IState> {
               // cover={<img alt="example" src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
               >
                 <Meta
-                  avatar={<Avatar src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
+                  // avatar={<Avatar src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
                   title={team.name}
                 // description="This is the description"
                 />
