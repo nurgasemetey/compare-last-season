@@ -379,7 +379,6 @@ export class TeamContainer extends React.Component<IProps, IState> {
           justify="center"
           align="middle"
           gutter={[10, 0]}
-          className="todos-container"
         >
           <Col
             xs={{ span: 24 }}
@@ -442,7 +441,6 @@ export class TeamContainer extends React.Component<IProps, IState> {
           justify="center"
           align="middle"
           gutter={[10, 0]}
-          className="todos-container"
         >
           <Col
             xs={{ span: 24 }}
