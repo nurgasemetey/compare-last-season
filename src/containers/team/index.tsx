@@ -226,10 +226,10 @@ const getSeasonData = (commonClubs: any[], seasonMatches: any[], teamId: string)
 }
 
 
-const getMatchTable = (seasonData: any) => {
+const getMatchTable = (seasonData: any, title: string) => {
   return (
     <Table
-      title={(data: any) => `This season ${THIS_SEASON}`}
+      title={(data: any) => title}
       bordered
       columns={matchColumns}
       dataSource={seasonData}
@@ -387,7 +387,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 9 }}
             xl={{ span: 9 }}
           >
-            {getMatchTable(lastSeasonData)}
+            {getMatchTable(lastSeasonData, `Last season ${LAST_SEASON}`)}
           </Col>
 
           <Col
@@ -397,7 +397,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 9 }}
             xl={{ span: 9 }}
           >
-            {getMatchTable(thisSeasonData)}
+            {getMatchTable(thisSeasonData, `This season ${THIS_SEASON}`)}
           </Col>
 
           <Col
