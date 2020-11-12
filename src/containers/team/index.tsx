@@ -226,45 +226,45 @@ const getSeasonData = (commonClubs: any[], seasonMatches: any[], teamId: string)
 }
 
 
-const getMatchTable = (seasonData:any) => {
+const getMatchTable = (seasonData: any) => {
   return (
     <Table
-              title={(data: any) => `This season ${THIS_SEASON}`}
-              bordered
-              columns={matchColumns}
-              dataSource={seasonData}
-              pagination={false}
-              size="small"
-              summary={pageData => {
-                let totalHome = 0;
-                let totalAway = 0;
+      title={(data: any) => `This season ${THIS_SEASON}`}
+      bordered
+      columns={matchColumns}
+      dataSource={seasonData}
+      pagination={false}
+      size="small"
+      summary={pageData => {
+        let totalHome = 0;
+        let totalAway = 0;
 
-                pageData.forEach(({ homeScore, awayScore }) => {
-                  if (homeScore.score) {
-                    totalHome += getHomePoint(homeScore.score.ft);
-                  }
-                  if (awayScore.score) {
-                    totalAway += getAwayPoint(awayScore.score.ft);
-                  }
-                });
+        pageData.forEach(({ homeScore, awayScore }) => {
+          if (homeScore.score) {
+            totalHome += getHomePoint(homeScore.score.ft);
+          }
+          if (awayScore.score) {
+            totalAway += getAwayPoint(awayScore.score.ft);
+          }
+        });
 
-                return (
-                  <>
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell align="center" index={0}>
-                        <Text strong>Total</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalHome}</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={2}>
-                        <Text strong>{totalAway}</Text>
-                      </Table.Summary.Cell>
-                    </Table.Summary.Row>
-                  </>
-                );
-              }}
-            />
+        return (
+          <>
+            <Table.Summary.Row>
+              <Table.Summary.Cell align="center" index={0}>
+                <Text strong>Total</Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell align="center" index={1}>
+                <Text strong>{totalHome}</Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell align="center" index={2}>
+                <Text strong>{totalAway}</Text>
+              </Table.Summary.Cell>
+            </Table.Summary.Row>
+          </>
+        );
+      }}
+    />
   )
 }
 
@@ -315,7 +315,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
 
       let lastSeasonData: any[] = getSeasonData(commonClubs, lastSeasonMatches, teamId);
       this.setState({ lastSeasonData });
-      
+
       let thisSeasonData: any[] = getSeasonData(commonClubs, thisSeasonMatches, teamId);
       this.setState({ thisSeasonData });
 
