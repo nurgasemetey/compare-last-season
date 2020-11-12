@@ -3,16 +3,30 @@ import { Row, Col, PageHeader, Table, Typography } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import './styles.less';
+import { RouteComponentProps } from 'react-router-dom';
+import _ from 'lodash';
+import { LEAGUE_MAP } from 'configs/LeagueConstants';
 
 const { Text } = Typography;
+interface RouterProps {
+  leagueId: string,
+  teamId: string
+}
 
-
-interface IProps { }
+interface IProps extends RouteComponentProps<RouterProps> { }
 
 
 interface IState {
-  pointChangeData: any[]
+  lastSeasonData: any[],
+  thisSeasonData: any[],
+  pointChangeData: any[],
+  lastSeasonDemotedData: any[],
+  thisSeasonPromotedData: any[]
 }
+
+const GREEN = "#67AA52";
+const RED = "#F92610";
+const YELLOW = "#EBC73D";
 
 const isNew = (isNew: boolean) => isNew ? <sup><Text type="danger">New</Text></sup> : null
 
@@ -21,300 +35,64 @@ const matchColumns = [
     title: 'Team',
     dataIndex: 'name',
     key: 'name',
-    // render: (text:any) => <a>{text}</a>,
   },
   {
     title: 'Home',
     dataIndex: 'homeScore',
     key: 'homeScore',
-    render(text: string, record: any) {
-      if (text) {
-        // console.log(text);
-        const scoreArr: string[] = text.split("-");
+    render(value: any, record: any) {
+      if (value.score) {
+        // console.log(value);
+        const score = value.score.ft;
         let color = "white";
-        if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
-          color = "#67AA52";
+        if (score[0] > score[1]) {
+          color = GREEN;
         }
-        else if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
-          color = "#F92610";
+        else if (score[0] < score[1]) {
+          color = RED;
         }
         else {
-          color = "#EBC73D";
+          color = YELLOW;
         }
         return {
           props: {
             style: { background: color },
             align: 'center'
           },
-          children: <div>{text}{isNew(record.isNew)}</div>
+          children: <div>{score[0]} - {score[1]}{isNew(record.isNew)}</div>
         };
       }
-
     }
   },
   {
     title: 'Away',
     dataIndex: 'awayScore',
     key: 'awayScore',
-    render(text: string, record: any) {
-      if (text) {
-        // console.log(text);
-        const scoreArr: string[] = text.split("-");
+    render(value: any, record: any) {
+      if (value.score) {
+        // console.log(value);
+        const score = value.score.ft;
         let color = "white";
-        if (parseInt(scoreArr[0]) < parseInt(scoreArr[1])) {
-          color = "#67AA52";
+        if (score[0] < score[1]) {
+          color = GREEN;
         }
-        else if (parseInt(scoreArr[0]) > parseInt(scoreArr[1])) {
-          color = "#F92610";
+        else if (score[0] > score[1]) {
+          color = RED;
         }
         else {
-          color = "#EBC73D";
+          color = YELLOW;
         }
         return {
           props: {
             style: { background: color },
             align: 'center'
           },
-          children: <div>{text}{isNew(record.isNew)}</div>
+          children: <div>{score[0]} - {score[1]}{isNew(record.isNew)}</div>
         };
       }
     }
   }
 ];
-const lastSeasonData = [
-  {
-    key: '1',
-    name: 'Liverpool',
-    homeScore: '1-2',
-    awayScore: '5-3'
-  },
-  {
-    key: '2',
-    name: 'City',
-    homeScore: '2-1',
-    awayScore: '2-1'
-  },
-  {
-    key: '3',
-    name: 'United',
-    homeScore: '0-2',
-    awayScore: '4-0'
-  },
-  {
-    key: '4',
-    name: 'Leicester',
-    homeScore: '1-1',
-    awayScore: '2-2'
-  },
-  {
-    key: '5',
-    name: 'Spurs',
-    homeScore: '2-1',
-    awayScore: '0-2'
-  },
-  {
-    key: '6',
-    name: 'Wolves',
-    homeScore: '2-0',
-    awayScore: '2-5'
-  },
-  {
-    key: '7',
-    name: 'Arsenal',
-    homeScore: '2-2',
-    awayScore: '1-2'
-  },
-  {
-    key: '8',
-    name: 'Sheffield',
-    homeScore: '2-2',
-    awayScore: '3-0'
-  },
-  {
-    key: '9',
-    name: 'Burnley',
-    homeScore: '3-0',
-    awayScore: '2-4'
-  },
-  {
-    key: '10',
-    name: 'Southampton',
-    homeScore: '0-2',
-    awayScore: '1-4'
-  },
-  {
-    key: '11',
-    name: 'Everton',
-    homeScore: '4-0',
-    awayScore: '3-1'
-  },
-  {
-    key: '12',
-    name: 'Newcastle',
-    homeScore: '1-0',
-    awayScore: '1-0'
-  },
-  {
-    key: '13',
-    name: 'Crystal Palace',
-    homeScore: '2-0',
-    awayScore: '2-3'
-  },
-  {
-    key: '14',
-    name: 'Brighton',
-    homeScore: '2-0',
-    awayScore: '1-1'
-  },
-  {
-    key: '15',
-    name: 'Westham',
-    homeScore: '0-1',
-    awayScore: '3-2'
-  },
-  {
-    key: '16',
-    name: 'Aston Villa',
-    homeScore: '2-1',
-    awayScore: '1-2'
-  },
-  {
-    key: '17',
-    name: 'Bournemouth',
-    homeScore: '0-1',
-    awayScore: '2-2'
-  },
-  {
-    key: '18',
-    name: 'Watford',
-    homeScore: '3-0',
-    awayScore: '1-2'
-  },
-  {
-    key: '19',
-    name: 'Norvich',
-    homeScore: '3-0',
-    awayScore: '1-2'
-  }
-];
-const thisSeasonData = [
-  {
-    key: '1',
-    name: 'Liverpool',
-    homeScore: '0-2',
-    awayScore: ''
-  },
-  {
-    key: '2',
-    name: 'City',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '3',
-    name: 'United',
-    homeScore: '',
-    awayScore: '0-0'
-  },
-  {
-    key: '4',
-    name: 'Leicester',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '5',
-    name: 'Spurs',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '6',
-    name: 'Wolves',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '7',
-    name: 'Arsenal',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '8',
-    name: 'Sheffield',
-    homeScore: '4-1',
-    awayScore: '',
-    isNew:true
-  },
-  {
-    key: '9',
-    name: 'Burnley',
-    homeScore: '',
-    awayScore: '0-3'
-  },
-  {
-    key: '10',
-    name: 'Southampton',
-    homeScore: '3-3',
-    awayScore: ''
-  },
-  {
-    key: '11',
-    name: 'Everton',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '12',
-    name: 'Newcastle',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '13',
-    name: 'Crystal Palace',
-    homeScore: '4-0',
-    awayScore: ''
-  },
-  {
-    key: '14',
-    name: 'Brighton',
-    homeScore: '',
-    awayScore: '1-3'
-  },
-  {
-    key: '15',
-    name: 'Westham',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '16',
-    name: 'Aston Villa',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '17',
-    name: 'Leeds',
-    homeScore: '',
-    awayScore: ''
-  },
-  {
-    key: '18',
-    name: 'West Brom',
-    homeScore: '',
-    awayScore: '3-3'
-  },
-  {
-    key: '19',
-    name: 'Fulham',
-    homeScore: '',
-    awayScore: ''
-  }
-];
-
 
 const pointChangeColumn = [
   {
@@ -325,13 +103,13 @@ const pointChangeColumn = [
       if (value !== -1) {
         let color = "white";
         if (value > 0) {
-          color = "#67AA52";
+          color = GREEN;
         }
         else if (value < 0) {
-          color = "#F92610";
+          color = RED;
         }
         else {
-          color = "#EBC73D";
+          color = YELLOW;
         }
         return {
           props: {
@@ -353,118 +131,253 @@ const pointChangeColumn = [
     }
   }
 ];
-// const routes = [
-//   {
-//     path: 'index',
-//     breadcrumbName: 'Home',
-//   },
-//   {
-//     path: 'first',
-//     breadcrumbName: 'English Premier League',
-//   },
-//   {
-//     path: 'second',
-//     breadcrumbName: 'Chelsea',
-//   },
-// ];
+
+const LAST_SEASON = "2019-20";
+const THIS_SEASON = "2020-21";
+
+
+const getHomePoint = (score: number[]) => {
+  if (score[0] > score[1]) {
+    return 3;
+  }
+  else if (score[0] < score[1]) {
+    return 0;
+  }
+  else {
+    return 1;
+  }
+}
+
+const getAwayPoint = (score: number[]) => {
+  if (score[0] < score[1]) {
+    return 3;
+  }
+  else if (score[0] > score[1]) {
+    return 0;
+  }
+  else {
+    return 1;
+  }
+}
+
+const getPointChange = (lastSeasonData: any[], thisSeasonData: any) => {
+  let pointChangeData: any[] = [];
+  for (let index = 0; index < lastSeasonData.length; index++) {
+    const lastSeason = lastSeasonData[index];
+    const thisSeason = thisSeasonData[index];
+    if (!thisSeason.homeScore.score && !thisSeason.awayScore.score) {
+      pointChangeData.push({
+        key: index + 1,
+        pointChange: -1
+      })
+      continue;
+    }
+    let lastSeasonTotalPoint = 0;
+    let thisSeasonTotalPoint = 0;
+    if (lastSeason.homeScore.score && thisSeason.homeScore.score) {
+      lastSeasonTotalPoint += getHomePoint(lastSeason.homeScore.score.ft);
+      thisSeasonTotalPoint += getHomePoint(thisSeason.homeScore.score.ft);
+    }
+    if (lastSeason.awayScore.score && thisSeason.awayScore.score) {
+      lastSeasonTotalPoint += getAwayPoint(lastSeason.awayScore.score.ft);
+      thisSeasonTotalPoint += getAwayPoint(thisSeason.awayScore.score.ft);
+    }
+    pointChangeData.push({
+      key: index + 1,
+      pointChange: thisSeasonTotalPoint - lastSeasonTotalPoint
+    })
+  }
+  return pointChangeData;
+}
+
+
+const getSeasonData = (commonClubs: any[], seasonMatches: any[], teamId: string) => {
+
+  let thisSeasonMatchesMap: Map<string, any[]> = new Map();
+
+  for (let index = 0; index < seasonMatches.length; index++) {
+    const element = seasonMatches[index];
+    let key = 'team1';
+    if (element.team1 === teamId) {
+      key = 'team2';
+    }
+    if (thisSeasonMatchesMap.has(element[key])) {
+      let matches: any[] = thisSeasonMatchesMap.get(element[key]) || [];
+      matches?.push(element);
+      thisSeasonMatchesMap.set(element[key], matches);
+    }
+    else {
+      thisSeasonMatchesMap.set(element[key], [element]);
+    }
+  }
+  let thisSeasonData: any[] = [];
+  for (let index = 0; index < commonClubs.length; index++) {
+    const element: any = _.cloneDeep(commonClubs[index]);
+    let matches: any[] = thisSeasonMatchesMap.get(element.name) || [];
+    if (matches[0].team1 === teamId) {
+      element.homeScore = matches[0];
+      element.awayScore = matches[1];
+    }
+    else {
+      element.homeScore = matches[1];
+      element.awayScore = matches[0];
+    }
+    thisSeasonData.push(element)
+  }
+  return thisSeasonData;
+}
+
+
+const getMatchTable = (seasonData: any, title: string) => {
+  return (
+    <Table
+      title={(data: any) => title}
+      bordered
+      columns={matchColumns}
+      dataSource={seasonData}
+      pagination={false}
+      size="small"
+      summary={pageData => {
+        let totalHome = 0;
+        let totalAway = 0;
+
+        pageData.forEach(({ homeScore, awayScore }) => {
+          if (homeScore.score) {
+            totalHome += getHomePoint(homeScore.score.ft);
+          }
+          if (awayScore.score) {
+            totalAway += getAwayPoint(awayScore.score.ft);
+          }
+        });
+
+        return (
+          <>
+            <Table.Summary.Row>
+              <Table.Summary.Cell align="center" index={0}>
+                <Text strong>Total</Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell align="center" index={1}>
+                <Text strong>{totalHome}</Text>
+              </Table.Summary.Cell>
+              <Table.Summary.Cell align="center" index={2}>
+                <Text strong>{totalAway}</Text>
+              </Table.Summary.Cell>
+            </Table.Summary.Row>
+          </>
+        );
+      }}
+    />
+  )
+}
 
 
 export class TeamContainer extends React.Component<IProps, IState> {
 
+  routes = [
+    {
+      path: 'index',
+      breadcrumbName: 'Home',
+    },
+    {
+      path: 'first',
+      breadcrumbName: 'English Premier League',
+    },
+    {
+      path: 'second',
+      breadcrumbName: 'Chelsea',
+    }
+  ]
+
   state = {
-    pointChangeData: []
+    lastSeasonData: [],
+    pointChangeData: [],
+    thisSeasonData: [],
+    lastSeasonDemotedData: [],
+    thisSeasonPromotedData: []
   }
 
   componentDidMount = async () => {
-    let pointChangeData: any[] = [];
-    for (let index = 0; index < lastSeasonData.length; index++) {
-      const lastSeason = lastSeasonData[index];
-      const thisSeason = thisSeasonData[index];
-      if (!thisSeason.homeScore && !thisSeason.awayScore) {
-        pointChangeData.push({
-          key: index + 1,
-          pointChange: -1
-        })
-        continue;
-      }
-      let lastSeasonTotalPoint = 0;
-      let thisSeasonTotalPoint = 0;
-      if (lastSeason.homeScore && thisSeason.homeScore) {
-        const lastSeasonScoreArr: string[] = lastSeason.homeScore.split("-");
-        if (parseInt(lastSeasonScoreArr[0]) > parseInt(lastSeasonScoreArr[1])) {
-          lastSeasonTotalPoint += 3;
-        }
-        else if (parseInt(lastSeasonScoreArr[0]) < parseInt(lastSeasonScoreArr[1])) {
-          lastSeasonTotalPoint += 0;
-        }
-        else {
-          lastSeasonTotalPoint += 1;
-        }
+    try {
+      console.log(this.props.match.params.leagueId, this.props.match.params.teamId);
 
-        const thisSeasonScoreArr: string[] = thisSeason.homeScore.split("-");
-        if (parseInt(thisSeasonScoreArr[0]) > parseInt(thisSeasonScoreArr[1])) {
-          thisSeasonTotalPoint += 3;
-        }
-        else if (parseInt(thisSeasonScoreArr[0]) < parseInt(thisSeasonScoreArr[1])) {
-          thisSeasonTotalPoint += 0;
-        }
-        else {
-          thisSeasonTotalPoint += 1;
-        }
-      }
-      if (lastSeason.awayScore && thisSeason.awayScore) {
-        const lastSeasonScoreArr: string[] = lastSeason.awayScore.split("-");
-        if (parseInt(lastSeasonScoreArr[0]) > parseInt(lastSeasonScoreArr[1])) {
-          lastSeasonTotalPoint += 0;
-        }
-        else if (parseInt(lastSeasonScoreArr[0]) < parseInt(lastSeasonScoreArr[1])) {
-          lastSeasonTotalPoint += 3;
-        }
-        else {
-          lastSeasonTotalPoint += 1;
-        }
+      const teamId = this.props.match.params.teamId;
 
-        const thisSeasonScoreArr: string[] = thisSeason.awayScore.split("-");
-        if (parseInt(thisSeasonScoreArr[0]) > parseInt(thisSeasonScoreArr[1])) {
-          thisSeasonTotalPoint += 0;
-        }
-        else if (parseInt(thisSeasonScoreArr[0]) < parseInt(thisSeasonScoreArr[1])) {
-          thisSeasonTotalPoint += 3;
-        }
-        else {
-          thisSeasonTotalPoint += 1;
-        }
-      }
-      pointChangeData.push({
-        key: index + 1,
-        pointChange: thisSeasonTotalPoint - lastSeasonTotalPoint
-      })
+      const thisSeasonClubs = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`).clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
+      const lastSeasonClubs = require(`../../assets/data/${LAST_SEASON}/${this.props.match.params.leagueId}.clubs.json`).clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 
+      let commonClubs = _.intersectionBy(lastSeasonClubs, thisSeasonClubs, 'name').filter((element: any) => element.name !== teamId);
+
+      let lastSeasonDemotedTeams = _.differenceBy(lastSeasonClubs, thisSeasonClubs, 'name');
+      let thisSeasonPromotedTeams = _.differenceBy(thisSeasonClubs, lastSeasonClubs, 'name');
+
+      const lastSeasonMatches = require(`../../assets/data/${LAST_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
+        return a.team1 === teamId || a.team2 === teamId;
+      });
+      const thisSeasonMatches = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
+        return a.team1 === teamId || a.team2 === teamId;
+      });
+
+      let lastSeasonData: any[] = getSeasonData(commonClubs, lastSeasonMatches, teamId);
+      this.setState({ lastSeasonData });
+
+      let thisSeasonData: any[] = getSeasonData(commonClubs, thisSeasonMatches, teamId);
+      this.setState({ thisSeasonData });
+
+      const pointChangeData = getPointChange(lastSeasonData, thisSeasonData);
+      this.setState({ pointChangeData });
+
+      let lastSeasonDemotedData: any[] = getSeasonData(lastSeasonDemotedTeams, lastSeasonMatches, teamId);
+      console.log(lastSeasonDemotedData);
+      this.setState({ lastSeasonDemotedData });
+
+
+      let thisSeasonPromotedData: any[] = getSeasonData(thisSeasonPromotedTeams, thisSeasonMatches, teamId);
+      console.log(thisSeasonPromotedData);
+      this.setState({ thisSeasonPromotedData });
+
+
+    } catch (err) {
+      console.log(err);
     }
-    this.setState({ pointChangeData })
   }
 
   render() {
-    const { pointChangeData } = this.state;
+    const { lastSeasonData, thisSeasonData, pointChangeData, lastSeasonDemotedData, thisSeasonPromotedData } = this.state;
+
     return (
       <>
         <PageHeader
-          title="Chelsea"
+          title={this.props.match.params.teamId}
           subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
           // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
-          // breadcrumb={{ routes }}
+          breadcrumb={{
+            routes: [{
+              path: '/',
+              breadcrumbName: 'Home',
+            },
+            {
+              path: `/league/${this.props.match.params.leagueId}`,
+              breadcrumbName: LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default",
+            },
+            {
+              path: `/league/${this.props.match.params.leagueId}/team/${this.props.match.params.teamId}`,
+              breadcrumbName: this.props.match.params.teamId,
+            }]
+          }}
           extra={[
-            <a 
-              href="https://github.com/nurgasemetey/compare-last-season" 
-              target="_blank" 
-              style={{ fontSize: "24px" }} 
-              >
+            <a
+              href="https://github.com/nurgasemetey/compare-last-season"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: "24px" }}
+            >
               <GithubFilled />
             </a>,
-            <a 
-              href="https://twitter.com/nurgasemetey" 
-              target="_blank" 
-              style={{ fontSize: "24px" }} 
+            <a
+              href="https://twitter.com/nurgasemetey"
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{ fontSize: "24px" }}
             >
               <TwitterSquareFilled />
             </a>
@@ -473,174 +386,87 @@ export class TeamContainer extends React.Component<IProps, IState> {
         <Row
           justify="center"
           align="middle"
-          gutter={20}
-          className="todos-container"
+          gutter={[10, 0]}
         >
           <Col
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 7 }}
-            xl={{ span: 7 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
           >
-            
-            <Table 
-              title={(data:any)=> "Last season 19-20"} 
-              bordered 
-              columns={matchColumns} 
-              dataSource={lastSeasonData} 
-              pagination={false} 
-              size="small"
-              summary={pageData => {
-                let totalHome = 0;
-                let totalAway = 0;
-        
-                pageData.forEach(({ homeScore, awayScore }) => {
-                  const homeScoreArr: string[] = homeScore.split("-");
-                  if (parseInt(homeScoreArr[0]) > parseInt(homeScoreArr[1])) {
-                    totalHome += 3;
-                  }
-                  else if (parseInt(homeScoreArr[0]) < parseInt(homeScoreArr[1])) {
-                    totalHome += 0;
-                  }
-                  else {
-                    totalHome += 1;
-                  }
-
-                  const awayScoreArr: string[] = awayScore.split("-");
-                  if (parseInt(awayScoreArr[0]) > parseInt(awayScoreArr[1])) {
-                    totalAway += 0;
-                  }
-                  else if (parseInt(awayScoreArr[0]) < parseInt(awayScoreArr[1])) {
-                    totalAway += 3;
-                  }
-                  else {
-                    totalAway += 1;
-                  }
-                });
-        
-                return (
-                  <>
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell align="center" index={0}>
-                        <Text strong>Total</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalHome}</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={2}>
-                        <Text strong>{totalAway}</Text>
-                      </Table.Summary.Cell>
-                    </Table.Summary.Row>
-                  </>
-                );
-              }}
-              />
+            {getMatchTable(lastSeasonData, `Last season ${LAST_SEASON}`)}
           </Col>
 
           <Col
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 7 }}
-            xl={{ span: 7 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
           >
-            <Table 
-              title={(data:any)=> "This season 20-21"} 
-              bordered 
-              columns={matchColumns} 
-              dataSource={thisSeasonData} 
-              pagination={false} 
-              size="small"
-              summary={pageData => {
-                let totalHome = 0;
-                let totalAway = 0;
-        
-                pageData.forEach(({ homeScore, awayScore }) => {
-                  if(homeScore) {
-                    const homeScoreArr: string[] = homeScore.split("-");
-                    if (parseInt(homeScoreArr[0]) > parseInt(homeScoreArr[1])) {
-                      totalHome += 3;
-                    }
-                    else if (parseInt(homeScoreArr[0]) < parseInt(homeScoreArr[1])) {
-                      totalHome += 0;
-                    }
-                    else {
-                      totalHome += 1;
-                    }
-                  }
-                  
-                  if(awayScore) {
-                    const awayScoreArr: string[] = awayScore.split("-");
-                    if (parseInt(awayScoreArr[0]) > parseInt(awayScoreArr[1])) {
-                      totalAway += 0;
-                    }
-                    else if (parseInt(awayScoreArr[0]) < parseInt(awayScoreArr[1])) {
-                      totalAway += 3;
-                    }
-                    else {
-                      totalAway += 1;
-                    }
-                  }
-                  
-                });
-        
-                return (
-                  <>
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell align="center" index={0}>
-                        <Text strong>Total</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalHome}<Text type="danger">(+3)</Text></Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell align="center" index={2}>
-                        <Text strong>{totalAway}</Text>
-                      </Table.Summary.Cell>
-                    </Table.Summary.Row>
-                  </>
-                );
-              }}
-            />
+            {getMatchTable(thisSeasonData, `This season ${THIS_SEASON}`)}
           </Col>
 
           <Col
             xs={{ span: 24 }}
             sm={{ span: 12 }}
             md={{ span: 12 }}
-            lg={{ span: 7 }}
-            xl={{ span: 7 }}
+            lg={{ span: 4 }}
+            xl={{ span: 4 }}
           >
-            
-            <Table 
-              title={(data:any)=> "Point Change"} 
-              bordered 
-              columns={pointChangeColumn} 
-              dataSource={pointChangeData} 
-              pagination={false} 
+
+            <Table
+              title={(data: any) => "Point Change"}
+              bordered
+              columns={pointChangeColumn}
+              dataSource={pointChangeData}
+              pagination={false}
               size="small"
               summary={pageData => {
                 let totalChange = 0;
-        
+
                 pageData.forEach(({ pointChange }) => {
-                  if(pointChange !== -1) {
+                  if (pointChange !== -1) {
                     totalChange += pointChange
-                    
                   }
-                  
                 });
-        
+
                 return (
                   <>
                     <Table.Summary.Row>
                       <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalChange}<Text type="danger">(+2)</Text></Text>
+                        <Text strong>{totalChange}</Text>
                       </Table.Summary.Cell>
                     </Table.Summary.Row>
                   </>
                 );
               }}
             />
+          </Col>
+        </Row>
+        <Row
+          justify="center"
+          align="middle"
+          gutter={[10, 0]}
+        >
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
+          >
+            {getMatchTable(lastSeasonDemotedData, `Last season ${LAST_SEASON}`)}
+          </Col>
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
+          >
+            {getMatchTable(thisSeasonPromotedData, `This season ${THIS_SEASON}`)}
           </Col>
         </Row>
       </>
