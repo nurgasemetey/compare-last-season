@@ -101,13 +101,13 @@ const pointChangeColumn = [
       if (value !== -1) {
         let color = "white";
         if (value > 0) {
-          color = "#67AA52";
+          color = GREEN;
         }
         else if (value < 0) {
-          color = "#F92610";
+          color = RED;
         }
         else {
-          color = "#EBC73D";
+          color = YELLOW;
         }
         return {
           props: {
