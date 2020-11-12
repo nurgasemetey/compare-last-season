@@ -20,6 +20,10 @@ interface IState {
   pointChangeData: any[],
 }
 
+const GREEN = "#67AA52";
+const RED = "#F92610";
+const YELLOW = "#EBC73D";
+
 const isNew = (isNew: boolean) => isNew ? <sup><Text type="danger">New</Text></sup> : null
 
 const matchColumns = [
@@ -38,13 +42,13 @@ const matchColumns = [
         const score = value.score.ft;
         let color = "white";
         if (score[0] > score[1]) {
-          color = "#67AA52";
+          color = GREEN;
         }
         else if (score[0] < score[1]) {
-          color = "#F92610";
+          color = RED;
         }
         else {
-          color = "#EBC73D";
+          color = YELLOW;
         }
         return {
           props: {
@@ -62,17 +66,17 @@ const matchColumns = [
     key: 'awayScore',
     render(value: any, record: any) {
       if (value) {
+        console.log(value);
         const score = value.score.ft;
-        console.log(score);
         let color = "white";
-        if (score[1] > score[0]) {
-          color = "#67AA52";
+        if (score[0] < score[1]) {
+          color = GREEN;
         }
-        else if (score[1] < score[0]) {
-          color = "#F92610";
+        else if (score[0] > score[1]) {
+          color = RED;
         }
         else {
-          color = "#EBC73D";
+          color = YELLOW;
         }
         return {
           props: {
@@ -314,12 +318,12 @@ export class TeamContainer extends React.Component<IProps, IState> {
       let matches:any[] = lastSeasonMatchesMap.get(element.name) || [];
       // console.log(matches);
       if(matches[0].team1 === teamId) {
-        element.awayScore = matches[0];
-        element.homeScore = matches[1];
+        element.homeScore = matches[0];
+        element.awayScore = matches[1];
       }
       else {
-        element.awayScore = matches[1];
-        element.homeScore = matches[0];
+        element.homeScore = matches[1];
+        element.awayScore = matches[0];
       }
       lastSeasonData.push(element)
     }
