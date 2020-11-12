@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Card, PageHeader, Avatar } from 'antd';
 
 import { RouteComponentProps } from 'react-router-dom';
-import Meta from 'antd/lib/card/Meta';
+const { Meta } = Card;
 
 
 interface RouterProps {
