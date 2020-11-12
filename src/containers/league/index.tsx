@@ -27,7 +27,7 @@ export class LeagueContainer extends React.Component<IProps, IState> {
   componentDidMount = async () => {
     console.log(this.props.match.params.leagueId);
     const data = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
-    const clubSorted = data.clubs.sort((a:any, b:any) => (a.name > b.name) ? 1 : -1)
+    const clubSorted = data.clubs.sort((a:any, b:any) => (a.name > b.name) ? 1 : -1);
     this.setState({ teams: clubSorted })
   }
 
