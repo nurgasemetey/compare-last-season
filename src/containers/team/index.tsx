@@ -20,6 +20,8 @@ interface IState {
   lastSeasonData: any[],
   thisSeasonData: any[],
   pointChangeData: any[],
+  lastSeasonDemotedData: any[],
+  thisSeasonPromotedData: any[]
 }
 
 const GREEN = "#67AA52";
@@ -289,7 +291,9 @@ export class TeamContainer extends React.Component<IProps, IState> {
   state = {
     lastSeasonData: [],
     pointChangeData: [],
-    thisSeasonData: []
+    thisSeasonData: [],
+    lastSeasonDemotedData: [],
+    thisSeasonPromotedData: []
   }
 
   componentDidMount = async () => {
@@ -324,9 +328,13 @@ export class TeamContainer extends React.Component<IProps, IState> {
 
       let lastSeasonDemotedData: any[] = getSeasonData(lastSeasonDemotedTeams, lastSeasonMatches, teamId);
       console.log(lastSeasonDemotedData);
+      this.setState({ lastSeasonDemotedData });
+
 
       let thisSeasonPromotedData: any[] = getSeasonData(thisSeasonPromotedTeams, thisSeasonMatches, teamId);
       console.log(thisSeasonPromotedData);
+      this.setState({ thisSeasonPromotedData });
+
 
     } catch (err) {
       console.log(err);
@@ -334,7 +342,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { lastSeasonData, thisSeasonData, pointChangeData } = this.state;
+    const { lastSeasonData, thisSeasonData, pointChangeData, lastSeasonDemotedData, thisSeasonPromotedData } = this.state;
 
     return (
       <>
@@ -449,7 +457,16 @@ export class TeamContainer extends React.Component<IProps, IState> {
             lg={{ span: 9 }}
             xl={{ span: 9 }}
           >
-
+            {getMatchTable(lastSeasonDemotedData, `Last season ${LAST_SEASON}`)}
+          </Col>
+          <Col
+            xs={{ span: 24 }}
+            sm={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 9 }}
+            xl={{ span: 9 }}
+          >
+            {getMatchTable(thisSeasonPromotedData, `Last season ${LAST_SEASON}`)}
           </Col>
         </Row>
       </>
