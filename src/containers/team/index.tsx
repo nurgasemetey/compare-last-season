@@ -393,55 +393,35 @@ export class TeamContainer extends React.Component<IProps, IState> {
               dataSource={thisSeasonData}
               pagination={false}
               size="small"
-            // summary={pageData => {
-            //   let totalHome = 0;
-            //   let totalAway = 0;
+              summary={pageData => {
+                let totalHome = 0;
+                let totalAway = 0;
 
-            //   pageData.forEach(({ homeScore, awayScore }) => {
-            //     if(homeScore) {
-            //       const homeScoreArr: string[] = homeScore.split("-");
-            //       if (parseInt(homeScoreArr[0]) > parseInt(homeScoreArr[1])) {
-            //         totalHome += 3;
-            //       }
-            //       else if (parseInt(homeScoreArr[0]) < parseInt(homeScoreArr[1])) {
-            //         totalHome += 0;
-            //       }
-            //       else {
-            //         totalHome += 1;
-            //       }
-            //     }
+                pageData.forEach(({ homeScore, awayScore }) => {
+                  if (homeScore.score) {
+                    totalHome += getHomePoint(homeScore.score.ft);
+                  }
+                  if (awayScore.score) {
+                    totalAway += getAwayPoint(awayScore.score.ft);
+                  }
+                });
 
-            //     if(awayScore) {
-            //       const awayScoreArr: string[] = awayScore.split("-");
-            //       if (parseInt(awayScoreArr[0]) > parseInt(awayScoreArr[1])) {
-            //         totalAway += 0;
-            //       }
-            //       else if (parseInt(awayScoreArr[0]) < parseInt(awayScoreArr[1])) {
-            //         totalAway += 3;
-            //       }
-            //       else {
-            //         totalAway += 1;
-            //       }
-            //     }
-
-            //   });
-
-            //   return (
-            //     <>
-            //       <Table.Summary.Row>
-            //         <Table.Summary.Cell align="center" index={0}>
-            //           <Text strong>Total</Text>
-            //         </Table.Summary.Cell>
-            //         <Table.Summary.Cell align="center" index={1}>
-            //           <Text strong>{totalHome}<Text type="danger">(+3)</Text></Text>
-            //         </Table.Summary.Cell>
-            //         <Table.Summary.Cell align="center" index={2}>
-            //           <Text strong>{totalAway}</Text>
-            //         </Table.Summary.Cell>
-            //       </Table.Summary.Row>
-            //     </>
-            //   );
-            // }}
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell align="center" index={0}>
+                        <Text strong>Total</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell align="center" index={1}>
+                        <Text strong>{totalHome}</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell align="center" index={2}>
+                        <Text strong>{totalAway}</Text>
+                      </Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
             />
           </Col>
 
@@ -460,27 +440,25 @@ export class TeamContainer extends React.Component<IProps, IState> {
               dataSource={pointChangeData}
               pagination={false}
               size="small"
-            // summary={pageData => {
-            //   let totalChange = 0;
+              summary={pageData => {
+                let totalChange = 0;
 
-            //   pageData.forEach(({ pointChange }) => {
-            //     if (pointChange !== -1) {
-            //       totalChange += pointChange
+                pageData.forEach(({ pointChange }) => {
+                  if (pointChange !== -1) {
+                    totalChange += pointChange
+                  }
+                });
 
-            //     }
-
-            //   });
-
-            //   return (
-            //     <>
-            //       <Table.Summary.Row>
-            //         <Table.Summary.Cell align="center" index={1}>
-            //           <Text strong>{totalChange}<Text type="danger">(+2)</Text></Text>
-            //         </Table.Summary.Cell>
-            //       </Table.Summary.Row>
-            //     </>
-            //   );
-            // }}
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell align="center" index={1}>
+                        <Text strong>{totalChange}</Text>
+                      </Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
             />
           </Col>
         </Row>
