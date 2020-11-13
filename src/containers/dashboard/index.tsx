@@ -34,7 +34,7 @@ export class DashboardContainer extends React.Component<IProps, IState> {
           <Content>
             <PageHeader
               title="Home"
-              // subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
+              subTitle="Compare team's last season and this season"
               // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
               // breadcrumb={{
               //   routes: [{
