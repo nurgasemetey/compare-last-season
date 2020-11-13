@@ -47,17 +47,17 @@ export class DashboardContainer extends React.Component<IProps, IState> {
                   href="https://github.com/nurgasemetey/compare-last-season"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ fontSize: "24px" }}
+                  style={{ fontSize: "16px" }}
                 >
-                  <GithubFilled />
+                  Star on Github <GithubFilled />
                 </a>,
                 <a
                   href="https://twitter.com/nurgasemetey"
                   rel="noopener noreferrer"
                   target="_blank"
-                  style={{ fontSize: "24px" }}
+                  style={{ fontSize: "16px" }}
                 >
-                  <TwitterSquareFilled />
+                  Follow on Twitter <TwitterSquareFilled />
                 </a>
               ]}
             />
