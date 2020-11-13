@@ -62,7 +62,7 @@ const matchColumns = [
             style: { background: color },
             align: 'center'
           },
-          children: <div>{score[0]} - {score[1]}{isNew(record.isNew)}</div>
+          children: <div>{score[0]} - {score[1]}{isNew(value.isNew)}</div>
         };
       }
     }
@@ -90,7 +90,7 @@ const matchColumns = [
             style: { background: color },
             align: 'center'
           },
-          children: <div>{score[0]} - {score[1]}{isNew(record.isNew)}</div>
+          children: <div>{score[0]} - {score[1]}{isNew(value.isNew)}</div>
         };
       }
     }
@@ -349,6 +349,21 @@ export class TeamContainer extends React.Component<IProps, IState> {
         .sort((a: any, b: any) => (a.date > b.date) ? 1 : -1);
       let latestMatch = sortedThisSeasonData[sortedThisSeasonData.length - 1];
       this.setState({ latestMatch });
+      let key = 'homeScore';
+      let targetTeamKey = 'team2'
+      if(latestMatch.team2 == teamId) {
+        key = 'awayScore';
+        targetTeamKey = 'team1';
+      }
+      for (let index = 0; index < thisSeasonData.length; index++) {
+        const element = thisSeasonData[index];
+        if(element.name === latestMatch[targetTeamKey]) {
+          element[key]['isNew'] = true;
+        }
+      }
+      // console.log(thisSeasonData);
+      this.setState({ thisSeasonData });
+
     } catch (err) {
       console.log(err);
     }
