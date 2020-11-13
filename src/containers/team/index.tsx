@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, PageHeader, Table, Typography } from 'antd';
+import { Row, Col, PageHeader, Table, Typography, Layout } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import './styles.less';
@@ -8,6 +8,8 @@ import _ from 'lodash';
 import { LEAGUE_MAP } from 'configs/LeagueConstants';
 
 const { Text } = Typography;
+const { Header, Footer, Sider, Content } = Layout;
+
 interface RouterProps {
   leagueId: string,
   teamId: string
@@ -346,129 +348,139 @@ export class TeamContainer extends React.Component<IProps, IState> {
 
     return (
       <>
-        <PageHeader
-          title={this.props.match.params.teamId}
-          subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
-          // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
-          breadcrumb={{
-            routes: [{
-              path: '/',
-              breadcrumbName: 'Home',
-            },
-            {
-              path: `/league/${this.props.match.params.leagueId}`,
-              breadcrumbName: LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default",
-            },
-            {
-              path: `/league/${this.props.match.params.leagueId}/team/${this.props.match.params.teamId}`,
-              breadcrumbName: this.props.match.params.teamId,
-            }]
-          }}
-          extra={[
-            <a
-              href="https://github.com/nurgasemetey/compare-last-season"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontSize: "24px" }}
-            >
-              <GithubFilled />
-            </a>,
-            <a
-              href="https://twitter.com/nurgasemetey"
-              rel="noopener noreferrer"
-              target="_blank"
-              style={{ fontSize: "24px" }}
-            >
-              <TwitterSquareFilled />
-            </a>
-          ]}
-        />
-        <Row
-          justify="center"
-          align="middle"
-          gutter={[10, 0]}
-        >
-          <Col
-            xs={{ span: 24 }}
-            sm={{ span: 12 }}
-            md={{ span: 12 }}
-            lg={{ span: 9 }}
-            xl={{ span: 9 }}
-          >
-            {getMatchTable(lastSeasonData, `Last season ${LAST_SEASON}`)}
-          </Col>
 
-          <Col
-            xs={{ span: 24 }}
-            sm={{ span: 12 }}
-            md={{ span: 12 }}
-            lg={{ span: 9 }}
-            xl={{ span: 9 }}
-          >
-            {getMatchTable(thisSeasonData, `This season ${THIS_SEASON}`)}
-          </Col>
+        <Layout>
+          {/* <Header>Header</Header> */}
 
-          <Col
-            xs={{ span: 24 }}
-            sm={{ span: 12 }}
-            md={{ span: 12 }}
-            lg={{ span: 4 }}
-            xl={{ span: 4 }}
-          >
-
-            <Table
-              title={(data: any) => "Point Change"}
-              bordered
-              columns={pointChangeColumn}
-              dataSource={pointChangeData}
-              pagination={false}
-              size="small"
-              summary={pageData => {
-                let totalChange = 0;
-
-                pageData.forEach(({ pointChange }) => {
-                  if (pointChange !== -1) {
-                    totalChange += pointChange
-                  }
-                });
-
-                return (
-                  <>
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell align="center" index={1}>
-                        <Text strong>{totalChange}</Text>
-                      </Table.Summary.Cell>
-                    </Table.Summary.Row>
-                  </>
-                );
+          <Content>
+            <PageHeader
+              title={this.props.match.params.teamId}
+              subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
+              // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
+              breadcrumb={{
+                routes: [{
+                  path: '/',
+                  breadcrumbName: 'Home',
+                },
+                {
+                  path: `/league/${this.props.match.params.leagueId}`,
+                  breadcrumbName: LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default",
+                },
+                {
+                  path: `/league/${this.props.match.params.leagueId}/team/${this.props.match.params.teamId}`,
+                  breadcrumbName: this.props.match.params.teamId,
+                }]
               }}
+              extra={[
+                <a
+                  href="https://github.com/nurgasemetey/compare-last-season"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ fontSize: "24px" }}
+                >
+                  <GithubFilled />
+                </a>,
+                <a
+                  href="https://twitter.com/nurgasemetey"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  style={{ fontSize: "24px" }}
+                >
+                  <TwitterSquareFilled />
+                </a>
+              ]}
             />
-          </Col>
-        </Row>
-        <Row
-          justify="center"
-          align="middle"
-          gutter={[10, 0]}
-        >
-          <Col
-            xs={{ span: 24 }}
-            sm={{ span: 12 }}
-            md={{ span: 12 }}
-            lg={{ span: 9 }}
-            xl={{ span: 9 }}
-          >
-            {getMatchTable(lastSeasonDemotedData, `Last season ${LAST_SEASON}`)}
-          </Col>
-          <Col
-            xs={{ span: 24 }}
-            sm={{ span: 12 }}
-            md={{ span: 12 }}
-            lg={{ span: 9 }}
-            xl={{ span: 9 }}
-          >
-            {getMatchTable(thisSeasonPromotedData, `This season ${THIS_SEASON}`)}
-          </Col>
-        </Row>
+            <Row
+              justify="center"
+              align="middle"
+              gutter={[10, 0]}
+            >
+              <Col
+                xs={{ span: 24 }}
+                sm={{ span: 12 }}
+                md={{ span: 12 }}
+                lg={{ span: 9 }}
+                xl={{ span: 9 }}
+              >
+                {getMatchTable(lastSeasonData, `Last season ${LAST_SEASON}`)}
+              </Col>
+
+              <Col
+                xs={{ span: 24 }}
+                sm={{ span: 12 }}
+                md={{ span: 12 }}
+                lg={{ span: 9 }}
+                xl={{ span: 9 }}
+              >
+                {getMatchTable(thisSeasonData, `This season ${THIS_SEASON}`)}
+              </Col>
+
+              <Col
+                xs={{ span: 24 }}
+                sm={{ span: 12 }}
+                md={{ span: 12 }}
+                lg={{ span: 4 }}
+                xl={{ span: 4 }}
+              >
+
+                <Table
+                  title={(data: any) => "Point Change"}
+                  bordered
+                  columns={pointChangeColumn}
+                  dataSource={pointChangeData}
+                  pagination={false}
+                  size="small"
+                  summary={pageData => {
+                    let totalChange = 0;
+
+                    pageData.forEach(({ pointChange }) => {
+                      if (pointChange !== -1) {
+                        totalChange += pointChange
+                      }
+                    });
+
+                    return (
+                      <>
+                        <Table.Summary.Row>
+                          <Table.Summary.Cell align="center" index={1}>
+                            <Text strong>{totalChange}</Text>
+                          </Table.Summary.Cell>
+                        </Table.Summary.Row>
+                      </>
+                    );
+                  }}
+                />
+              </Col>
+            </Row>
+            <Row
+              justify="center"
+              align="middle"
+              gutter={[10, 0]}
+            >
+              <Col
+                xs={{ span: 24 }}
+                sm={{ span: 12 }}
+                md={{ span: 12 }}
+                lg={{ span: 9 }}
+                xl={{ span: 9 }}
+              >
+                {getMatchTable(lastSeasonDemotedData, `Last season ${LAST_SEASON}`)}
+              </Col>
+              <Col
+                xs={{ span: 24 }}
+                sm={{ span: 12 }}
+                md={{ span: 12 }}
+                lg={{ span: 9 }}
+                xl={{ span: 9 }}
+              >
+                {getMatchTable(thisSeasonPromotedData, `This season ${THIS_SEASON}`)}
+              </Col>
+            </Row>
+
+          </Content>
+          {/* <Footer>Footer</Footer> */}
+        </Layout>
+
       </>
 
     )
