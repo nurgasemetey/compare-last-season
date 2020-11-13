@@ -109,7 +109,32 @@ export class DashboardContainer extends React.Component<IProps, IState> {
               </Col>
             </Row>
           </Content>
-          {/* <Footer>Footer</Footer> */}
+          <Footer>
+            <Row
+              justify="center"
+              align="middle"
+              gutter={[10, 10]}
+            >
+              <a
+                href="https://github.com/nurgasemetey/compare-last-season"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "16px" }}
+              >
+                <GithubFilled /> Source code on Github
+                </a>
+                  - 
+              <a
+                href="https://twitter.com/nurgasemetey"
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{ fontSize: "16px" }}
+              >
+                <TwitterSquareFilled /> Follow me on Twitter
+                </a>
+            </Row>
+
+          </Footer>
         </Layout>
 
       </>
