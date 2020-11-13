@@ -31,7 +31,7 @@ const GREEN = "#67AA52";
 const RED = "#F92610";
 const YELLOW = "#EBC73D";
 
-// const isNew = (isNew: boolean) => isNew ? <sup><Text type="warning">New</Text></sup> : null
+const isNew = (isNew: boolean) => isNew ? <sup><Text style={{color:"white"}}>New</Text></sup> : null
 
 const matchColumns = [
   {
@@ -73,7 +73,7 @@ const matchColumns = [
             style: { background: color },
             // align: 'center' as "center",
           },
-          children: <div>{score[0]} - {score[1]}</div>
+        children: <div>{score[0]} - {score[1]} {isNew(value.isNew)}</div>
         };
       }
     }
@@ -102,7 +102,7 @@ const matchColumns = [
             style: { background: color },
             // align: 'center' as "center",
           },
-          children: <div>{score[0]} - {score[1]}</div>
+          children: <div>{score[0]} - {score[1]} {isNew(value.isNew)}</div>
         };
       }
     }
@@ -435,7 +435,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
               // style={{ marginTop: 20 }}
               gutter={[20, 20]}
             >
-              <Title level={3}>Common Team in Both Seasons</Title>
+              <Title level={3}>Common Teams in Both Seasons</Title>
             </Row>
             <Row
               justify="center"
