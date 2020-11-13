@@ -374,8 +374,19 @@ export class TeamContainer extends React.Component<IProps, IState> {
           element[key]['isNew'] = true;
         }
       }
+
       // console.log(thisSeasonData);
       this.setState({ thisSeasonData });
+
+
+      for (let index = 0; index < thisSeasonPromotedData.length; index++) {
+        const element = thisSeasonPromotedData[index];
+        if (element.name === latestMatch[targetTeamKey]) {
+          element[key]['isNew'] = true;
+        }
+      }
+      this.setState({ thisSeasonPromotedData });
+
 
     } catch (err) {
       console.log(err);
