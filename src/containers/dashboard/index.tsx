@@ -75,21 +75,21 @@ export class DashboardContainer extends React.Component<IProps, IState> {
                 xl={{ span: 6 }}
               >
                 <Card
-                  // title={team.name}
-                  // headStyle={{ textAlign: "center" }}
+                  title="English Premier League"
+                  headStyle={{ textAlign: "center" }}
                   hoverable
                   // style={{ width: 240 }}
                   bordered={false}
                   onClick={(e: any) => {
                     this.props.history.push(`/league/en.1`);
                   }}
-                // cover={<img alt="example" src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
+                  cover={<img alt="example" src={require('assets/images/leagues/english-premier-league/epl-logo.png')} />}
                 >
-                  <Meta
+                  {/* <Meta
                     // avatar={<Avatar src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
-                    title="English Premier League"
+                    // title="English Premier League"
                   // description="This is the description"
-                  />
+                  /> */}
                 </Card>
               </Col>
             </Row>
