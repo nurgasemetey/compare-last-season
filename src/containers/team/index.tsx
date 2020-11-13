@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import _ from 'lodash';
 import { LEAGUE_MAP } from 'configs/LeagueConstants';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
 interface RouterProps {
@@ -351,13 +351,13 @@ export class TeamContainer extends React.Component<IProps, IState> {
       this.setState({ latestMatch });
       let key = 'homeScore';
       let targetTeamKey = 'team2'
-      if(latestMatch.team2 == teamId) {
+      if (latestMatch.team2 == teamId) {
         key = 'awayScore';
         targetTeamKey = 'team1';
       }
       for (let index = 0; index < thisSeasonData.length; index++) {
         const element = thisSeasonData[index];
-        if(element.name === latestMatch[targetTeamKey]) {
+        if (element.name === latestMatch[targetTeamKey]) {
           element[key]['isNew'] = true;
         }
       }
@@ -416,6 +416,14 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 </a>
               ]}
             />
+            <Row
+              justify="center"
+              align="middle"
+              style={{ marginTop: 20 }}
+              gutter={[20, 20]}
+            >
+              <Title level={3}>Common Team in Both Seasons</Title>
+            </Row>
             <Row
               justify="center"
               align="middle"
@@ -481,7 +489,16 @@ export class TeamContainer extends React.Component<IProps, IState> {
             <Row
               justify="center"
               align="middle"
-              gutter={[10, 0]}
+              style={{ marginTop: 20 }}
+              gutter={[20, 20]}
+            >
+              <Title level={3}>Demoted and Promoted Teams</Title>
+            </Row>
+            <Row
+              justify="center"
+              align="middle"
+              style={{ marginTop: 20 }}
+              gutter={[20, 20]}
             >
               <Col
                 xs={{ span: 24 }}
