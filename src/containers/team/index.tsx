@@ -102,7 +102,7 @@ const pointChangeColumn = [
     dataIndex: 'pointChange',
     key: 'pointChange',
     render(value: number, record: any) {
-      if (value !== -1) {
+      if (value !== NOT_VALID) {
         let color = "white";
         if (value > 0) {
           color = GREEN;
@@ -162,6 +162,7 @@ const getAwayPoint = (score: number[]) => {
   }
 }
 
+const NOT_VALID = -100;
 const getPointChange = (lastSeasonData: any[], thisSeasonData: any) => {
   let pointChangeData: any[] = [];
   for (let index = 0; index < lastSeasonData.length; index++) {
@@ -170,7 +171,7 @@ const getPointChange = (lastSeasonData: any[], thisSeasonData: any) => {
     if (!thisSeason.homeScore.score && !thisSeason.awayScore.score) {
       pointChangeData.push({
         key: index + 1,
-        pointChange: -1
+        pointChange: NOT_VALID
       })
       continue;
     }
@@ -329,12 +330,12 @@ export class TeamContainer extends React.Component<IProps, IState> {
       this.setState({ pointChangeData });
 
       let lastSeasonDemotedData: any[] = getSeasonData(lastSeasonDemotedTeams, lastSeasonMatches, teamId);
-      console.log(lastSeasonDemotedData);
+      // console.log(lastSeasonDemotedData);
       this.setState({ lastSeasonDemotedData });
 
 
       let thisSeasonPromotedData: any[] = getSeasonData(thisSeasonPromotedTeams, thisSeasonMatches, teamId);
-      console.log(thisSeasonPromotedData);
+      // console.log(thisSeasonPromotedData);
       this.setState({ thisSeasonPromotedData });
 
 
@@ -434,7 +435,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
                     let totalChange = 0;
 
                     pageData.forEach(({ pointChange }) => {
-                      if (pointChange !== -1) {
+                      if (pointChange !== NOT_VALID) {
                         totalChange += pointChange
                       }
                     });
