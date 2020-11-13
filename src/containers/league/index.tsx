@@ -4,6 +4,7 @@ import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import { RouteComponentProps } from 'react-router-dom';
 import { LEAGUE_MAP } from 'configs/LeagueConstants';
+import { RedditIcon, RedditShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 
 const { Meta } = Card;
 const { Header, Footer, Sider, Content } = Layout;
@@ -42,7 +43,7 @@ export class LeagueContainer extends React.Component<IProps, IState> {
         <Layout>
           {/* <Header>Header</Header> */}
           <Content>
-          <PageHeader
+            <PageHeader
               title={LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default"}
               // subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
               // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
@@ -58,22 +59,29 @@ export class LeagueContainer extends React.Component<IProps, IState> {
                 ]
               }}
               extra={[
-                <a
-                  href="https://github.com/nurgasemetey/compare-last-season"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ fontSize: "16px" }}
+                <TwitterShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  className="Demo__some-network__share-button"
                 >
-                  Star on Github <GithubFilled />
-                </a>,
-                <a
-                  href="https://twitter.com/nurgasemetey"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  style={{ fontSize: "16px" }}
+                  <TwitterIcon size={32} round />
+                </TwitterShareButton>,
+                <RedditShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  windowWidth={660}
+                  windowHeight={460}
+                  className="Demo__some-network__share-button"
                 >
-                  Follow on Twitter <TwitterSquareFilled />
-                </a>
+                  <RedditIcon size={32} round />
+                </RedditShareButton>,
+                <TelegramShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  className="Demo__some-network__share-button"
+                >
+                  <TelegramIcon size={32} round />
+                </TelegramShareButton>
               ]}
             />
             <Row
