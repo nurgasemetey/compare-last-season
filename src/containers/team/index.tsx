@@ -516,7 +516,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
               style={{ marginTop: 20 }}
               // gutter={[20, 20]}
             >
-              <Title level={3}>Demoted and Promoted Teams</Title>
+              <Title level={3}>Relegated and Promoted Teams</Title>
             </Row>
             <Row
               justify="center"
