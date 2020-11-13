@@ -38,11 +38,22 @@ const matchColumns = [
     title: 'Team',
     dataIndex: 'name',
     key: 'name',
+    align: 'center' as "center",
+    render(value: any, record: any) {
+      return {
+        props: {
+          // style: { background: color },
+          // align: 'center' as "center",
+        },
+        children: <div>{value}</div>
+      };
+    }
   },
   {
     title: 'Home',
     dataIndex: 'homeScore',
     key: 'homeScore',
+    align: 'center' as "center",
     render(value: any, record: any) {
       if (value.score) {
         // console.log(value);
@@ -60,7 +71,7 @@ const matchColumns = [
         return {
           props: {
             style: { background: color },
-            align: 'center'
+            // align: 'center' as "center",
           },
           children: <div>{score[0]} - {score[1]}</div>
         };
@@ -71,6 +82,7 @@ const matchColumns = [
     title: 'Away',
     dataIndex: 'awayScore',
     key: 'awayScore',
+    align: 'center' as "center",
     render(value: any, record: any) {
       if (value.score) {
         // console.log(value);
@@ -88,7 +100,7 @@ const matchColumns = [
         return {
           props: {
             style: { background: color },
-            align: 'center'
+            // align: 'center' as "center",
           },
           children: <div>{score[0]} - {score[1]}</div>
         };
@@ -102,6 +114,7 @@ const pointChangeColumn = [
     title: 'Point Change',
     dataIndex: 'pointChange',
     key: 'pointChange',
+    align: 'center' as "center",
     render(value: number, record: any) {
       if (value !== NOT_VALID) {
         let color = "white";
@@ -117,7 +130,7 @@ const pointChangeColumn = [
         return {
           props: {
             style: { background: color },
-            align: 'center',
+            // align: 'center',
           },
           children: <div>{value}</div>
         };
@@ -126,7 +139,7 @@ const pointChangeColumn = [
         return {
           props: {
             style: { background: "white" },
-            align: 'center'
+            // align: 'center'
           },
           children: <div>-</div>
         };
@@ -419,7 +432,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
             <Row
               justify="center"
               align="middle"
-              style={{ marginTop: 20 }}
+              // style={{ marginTop: 20 }}
               gutter={[20, 20]}
             >
               <Title level={3}>Common Team in Both Seasons</Title>
@@ -433,8 +446,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 xs={{ span: 24 }}
                 sm={{ span: 12 }}
                 md={{ span: 12 }}
-                lg={{ span: 9 }}
-                xl={{ span: 9 }}
+                lg={{ span: 10 }}
+                xl={{ span: 10 }}
               >
                 {getMatchTable(lastSeasonData, `Last season ${LAST_SEASON}`)}
               </Col>
@@ -443,8 +456,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 xs={{ span: 24 }}
                 sm={{ span: 12 }}
                 md={{ span: 12 }}
-                lg={{ span: 9 }}
-                xl={{ span: 9 }}
+                lg={{ span: 10 }}
+                xl={{ span: 10 }}
               >
                 {getMatchTable(thisSeasonData, `This season ${THIS_SEASON}`)}
               </Col>
@@ -453,8 +466,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 xs={{ span: 24 }}
                 sm={{ span: 12 }}
                 md={{ span: 12 }}
-                lg={{ span: 4 }}
-                xl={{ span: 4 }}
+                lg={{ span: 3 }}
+                xl={{ span: 3 }}
               >
 
                 <Table
@@ -490,14 +503,14 @@ export class TeamContainer extends React.Component<IProps, IState> {
               justify="center"
               align="middle"
               style={{ marginTop: 20 }}
-              gutter={[20, 20]}
+              // gutter={[20, 20]}
             >
               <Title level={3}>Demoted and Promoted Teams</Title>
             </Row>
             <Row
               justify="center"
               align="middle"
-              style={{ marginTop: 20 }}
+              // style={{ marginTop: 20 }}
               gutter={[20, 20]}
             >
               <Col
