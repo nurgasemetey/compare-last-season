@@ -1,10 +1,9 @@
 import React from 'react';
-import { Card, Col, Layout, PageHeader, Row } from 'antd';
+import { Card, Col, Layout, PageHeader, Row, Typography } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
-
-
 import { RouteComponentProps } from 'react-router-dom';
 
+const { Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 
@@ -62,6 +61,14 @@ export class DashboardContainer extends React.Component<IProps, IState> {
                 </a>
               ]}
             />
+            <Row
+              justify="center"
+              align="middle"
+              // style={{ marginTop: 20 }}
+              gutter={[20, 20]}
+            >
+              <Title level={3}>Leagues</Title>
+            </Row>
             <Row
               justify="center"
               align="middle"
