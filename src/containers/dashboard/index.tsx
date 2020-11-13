@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Col, Layout, PageHeader, Row, Typography } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 import { RouteComponentProps } from 'react-router-dom';
+import { RedditIcon, RedditShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 
 const { Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
@@ -43,22 +44,29 @@ export class DashboardContainer extends React.Component<IProps, IState> {
               //   ]
               // }}
               extra={[
-                <a
-                  href="https://github.com/nurgasemetey/compare-last-season"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ fontSize: "24px" }}
+                <TwitterShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  className="Demo__some-network__share-button"
                 >
-                  <GithubFilled />
-                </a>,
-                <a
-                  href="https://twitter.com/nurgasemetey"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  style={{ fontSize: "24px" }}
+                  <TwitterIcon size={32} round />
+                </TwitterShareButton>,
+                <RedditShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  windowWidth={660}
+                  windowHeight={460}
+                  className="Demo__some-network__share-button"
                 >
-                  <TwitterSquareFilled />
-                </a>
+                  <RedditIcon size={32} round />
+                </RedditShareButton>,
+                <TelegramShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  className="Demo__some-network__share-button"
+                >
+                  <TelegramIcon size={32} round />
+                </TelegramShareButton>
               ]}
             />
             <Row
@@ -101,7 +109,32 @@ export class DashboardContainer extends React.Component<IProps, IState> {
               </Col>
             </Row>
           </Content>
-          {/* <Footer>Footer</Footer> */}
+          <Footer>
+            <Row
+              justify="center"
+              align="middle"
+              gutter={[10, 10]}
+            >
+              <a
+                href="https://github.com/nurgasemetey/compare-last-season"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "16px" }}
+              >
+                <GithubFilled /> Source code on Github
+                </a>
+                  - 
+              <a
+                href="https://twitter.com/nurgasemetey"
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{ fontSize: "16px" }}
+              >
+                <TwitterSquareFilled /> Follow me on Twitter
+                </a>
+            </Row>
+
+          </Footer>
         </Layout>
 
       </>

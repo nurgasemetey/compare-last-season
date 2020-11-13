@@ -6,6 +6,7 @@ import './styles.less';
 import { RouteComponentProps } from 'react-router-dom';
 import _ from 'lodash';
 import { LEAGUE_MAP } from 'configs/LeagueConstants';
+import { RedditIcon, RedditShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 
 const { Text, Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
@@ -31,7 +32,7 @@ const GREEN = "#67AA52";
 const RED = "#F92610";
 const YELLOW = "#EBC73D";
 
-const isNew = (isNew: boolean) => isNew ? <sup><Text style={{color:"white"}}>New</Text></sup> : null
+const isNew = (isNew: boolean) => isNew ? <sup><Text style={{ color: "white" }}>New</Text></sup> : null
 
 const matchColumns = [
   {
@@ -73,7 +74,7 @@ const matchColumns = [
             style: { background: color },
             // align: 'center' as "center",
           },
-        children: <div>{score[0]} - {score[1]} {isNew(value.isNew)}</div>
+          children: <div>{score[0]} - {score[1]} {isNew(value.isNew)}</div>
         };
       }
     }
@@ -422,22 +423,29 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 }]
               }}
               extra={[
-                <a
-                  href="https://github.com/nurgasemetey/compare-last-season"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ fontSize: "24px" }}
+                <TwitterShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  className="Demo__some-network__share-button"
                 >
-                  <GithubFilled />
-                </a>,
-                <a
-                  href="https://twitter.com/nurgasemetey"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  style={{ fontSize: "24px" }}
+                  <TwitterIcon size={32} round />
+                </TwitterShareButton>,
+                <RedditShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  windowWidth={660}
+                  windowHeight={460}
+                  className="Demo__some-network__share-button"
                 >
-                  <TwitterSquareFilled />
-                </a>
+                  <RedditIcon size={32} round />
+                </RedditShareButton>,
+                <TelegramShareButton
+                  url="https://compare-last-season.netlify.app"
+                  title="Compare team's last season and this season"
+                  className="Demo__some-network__share-button"
+                >
+                  <TelegramIcon size={32} round />
+                </TelegramShareButton>
               ]}
             />
             <Row
@@ -514,7 +522,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
               justify="center"
               align="middle"
               style={{ marginTop: 20 }}
-              // gutter={[20, 20]}
+            // gutter={[20, 20]}
             >
               <Title level={3}>Relegated and Promoted Teams</Title>
             </Row>
@@ -545,7 +553,32 @@ export class TeamContainer extends React.Component<IProps, IState> {
             </Row>
 
           </Content>
-          {/* <Footer>Footer</Footer> */}
+          <Footer>
+            <Row
+              justify="center"
+              align="middle"
+              gutter={[10, 10]}
+            >
+              <a
+                href="https://github.com/nurgasemetey/compare-last-season"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "16px" }}
+              >
+                <GithubFilled /> Source code on Github
+                </a>
+                  -
+              <a
+                href="https://twitter.com/nurgasemetey"
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{ fontSize: "16px" }}
+              >
+                <TwitterSquareFilled /> Follow me on Twitter
+                </a>
+            </Row>
+
+          </Footer>
         </Layout>
 
       </>
