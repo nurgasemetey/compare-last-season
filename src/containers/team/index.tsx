@@ -23,7 +23,8 @@ interface IState {
   thisSeasonData: any[],
   pointChangeData: any[],
   lastSeasonDemotedData: any[],
-  thisSeasonPromotedData: any[]
+  thisSeasonPromotedData: any[],
+  latestMatch: any
 }
 
 const GREEN = "#67AA52";
@@ -273,6 +274,9 @@ const getMatchTable = (seasonData: any, title: string) => {
   )
 }
 
+const getLatestTitle = (latestMatch: any) => {
+  return latestMatch ? `Last match added: ${latestMatch.team1} - ${latestMatch.team2} (${latestMatch.date})` : "";
+}
 
 export class TeamContainer extends React.Component<IProps, IState> {
 
@@ -296,7 +300,8 @@ export class TeamContainer extends React.Component<IProps, IState> {
     pointChangeData: [],
     thisSeasonData: [],
     lastSeasonDemotedData: [],
-    thisSeasonPromotedData: []
+    thisSeasonPromotedData: [],
+    latestMatch: null
   }
 
   componentDidMount = async () => {
@@ -339,13 +344,18 @@ export class TeamContainer extends React.Component<IProps, IState> {
       this.setState({ thisSeasonPromotedData });
 
 
+      let sortedThisSeasonData: any[] = thisSeasonMatches
+        .filter((a: any) => a.score)
+        .sort((a: any, b: any) => (a.date > b.date) ? 1 : -1);
+      let latestMatch = sortedThisSeasonData[sortedThisSeasonData.length - 1];
+      this.setState({ latestMatch });
     } catch (err) {
       console.log(err);
     }
   }
 
   render() {
-    const { lastSeasonData, thisSeasonData, pointChangeData, lastSeasonDemotedData, thisSeasonPromotedData } = this.state;
+    const { lastSeasonData, thisSeasonData, pointChangeData, lastSeasonDemotedData, thisSeasonPromotedData, latestMatch } = this.state;
 
     return (
       <>
@@ -356,7 +366,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
           <Content>
             <PageHeader
               title={this.props.match.params.teamId}
-              subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
+              subTitle={"Comparison of last and this season." + getLatestTitle(latestMatch)}
               // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
               breadcrumb={{
                 routes: [{
