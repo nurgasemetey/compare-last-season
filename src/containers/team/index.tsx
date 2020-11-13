@@ -31,7 +31,7 @@ const GREEN = "#67AA52";
 const RED = "#F92610";
 const YELLOW = "#EBC73D";
 
-const isNew = (isNew: boolean) => isNew ? <sup><Text type="danger">New</Text></sup> : null
+// const isNew = (isNew: boolean) => isNew ? <sup><Text type="warning">New</Text></sup> : null
 
 const matchColumns = [
   {
@@ -62,7 +62,7 @@ const matchColumns = [
             style: { background: color },
             align: 'center'
           },
-          children: <div>{score[0]} - {score[1]}{isNew(value.isNew)}</div>
+          children: <div>{score[0]} - {score[1]}</div>
         };
       }
     }
@@ -90,7 +90,7 @@ const matchColumns = [
             style: { background: color },
             align: 'center'
           },
-          children: <div>{score[0]} - {score[1]}{isNew(value.isNew)}</div>
+          children: <div>{score[0]} - {score[1]}</div>
         };
       }
     }
