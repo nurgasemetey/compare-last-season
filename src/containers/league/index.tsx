@@ -3,7 +3,7 @@ import { Row, Col, Card, PageHeader, Avatar, Layout } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import { RouteComponentProps } from 'react-router-dom';
-import { LEAGUE_MAP } from 'configs/LeagueConstants';
+import { LEAGUES } from 'configs/LeagueConstants';
 import { RedditIcon, RedditShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 
 const { Meta } = Card;
@@ -26,7 +26,7 @@ const THIS_SEASON = "2020-21";
 export class LeagueContainer extends React.Component<IProps, IState> {
 
   state = {
-    teams: []
+    teams: [],
   }
 
   componentDidMount = async () => {
@@ -44,7 +44,7 @@ export class LeagueContainer extends React.Component<IProps, IState> {
           {/* <Header>Header</Header> */}
           <Content>
             <PageHeader
-              title={LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default"}
+              title={LEAGUES.filter(a => a.code === this.props.match.params.leagueId)[0].name}
               // subTitle="Comparison of last and this season. Last match added: Chelsea-Sheffield 2020-11-07"
               // avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
               breadcrumb={{
@@ -54,7 +54,7 @@ export class LeagueContainer extends React.Component<IProps, IState> {
                 },
                 {
                   path: `/league/${this.props.match.params.leagueId}`,
-                  breadcrumbName: LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default",
+                  breadcrumbName: LEAGUES.filter(a => a.code === this.props.match.params.leagueId)[0].name,
                 },
                 ]
               }}
