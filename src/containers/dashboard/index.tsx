@@ -3,6 +3,7 @@ import { Card, Col, Layout, PageHeader, Row, Typography } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import { RedditIcon, RedditShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
+import { LEAGUES } from 'configs/LeagueConstants';
 
 const { Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
@@ -82,31 +83,43 @@ export class DashboardContainer extends React.Component<IProps, IState> {
               align="middle"
               gutter={[10, 10]}
             >
-              <Col
+              {LEAGUES.map((team: any) => {
+                return (
+                  <Col
                 xs={{ span: 24 }}
                 sm={{ span: 24 }}
-                md={{ span: 12 }}
-                lg={{ span: 8 }}
-                xl={{ span: 6 }}
+                md={{ span: 6 }}
+                lg={{ span: 4 }}
+                xl={{ span: 4 }}
               >
+                
                 <Card
-                  title="English Premier League"
-                  headStyle={{ textAlign: "center" }}
+                  // title={team.name}
+                  // headStyle={{ textAlign: "center" }}
                   hoverable
-                  // style={{ width: 240 }}
+                  // style={{ width: 400, height:400 }}
                   bordered={false}
                   onClick={(e: any) => {
-                    this.props.history.push(`/league/en.1`);
+                    this.props.history.push(`/league/${team.code}`);
                   }}
-                  cover={<img alt="example" src={require('assets/images/leagues/english-premier-league/epl-logo.png')} />}
+                  // cover={<img alt="example" src={require(`assets/images/leagues/${team.code}.png`)} />}
                 >
                   {/* <Meta
                     // avatar={<Avatar src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
                     // title="English Premier League"
                   // description="This is the description"
                   /> */}
+                  <Meta
+                        // avatar={<Avatar src="https://img.icons8.com/color/48/000000/chelsea-fc.png" />}
+                        title={team.name}
+                      // description="This is the description"
+                      />
                 </Card>
               </Col>
+                )
+               })
+               }
+              
             </Row>
           </Content>
           <Footer>

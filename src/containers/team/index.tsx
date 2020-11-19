@@ -5,7 +5,7 @@ import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 import './styles.less';
 import { RouteComponentProps } from 'react-router-dom';
 import _ from 'lodash';
-import { LEAGUE_MAP } from 'configs/LeagueConstants';
+import { LEAGUES } from 'configs/LeagueConstants';
 import { RedditIcon, RedditShareButton, TelegramIcon, TelegramShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 
 const { Text, Title } = Typography;
@@ -415,7 +415,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 },
                 {
                   path: `/league/${this.props.match.params.leagueId}`,
-                  breadcrumbName: LEAGUE_MAP.get(this.props.match.params.leagueId) || "Default",
+                  breadcrumbName: LEAGUES.filter(a => a.code === this.props.match.params.leagueId)[0].name,
                 },
                 {
                   path: `/league/${this.props.match.params.leagueId}/team/${this.props.match.params.teamId}`,
