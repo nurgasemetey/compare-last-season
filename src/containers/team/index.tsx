@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, PageHeader, Table, Typography, Layout } from 'antd';
+import { Row, Col, PageHeader, Table, Typography, Layout, Spin } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import './styles.less';
@@ -25,7 +25,8 @@ interface IState {
   pointChangeData: any[],
   lastSeasonDemotedData: any[],
   thisSeasonPromotedData: any[],
-  latestMatch: any
+  latestMatch: any,
+  loading: boolean
 }
 
 const GREEN = "#67AA52";
@@ -315,27 +316,39 @@ export class TeamContainer extends React.Component<IProps, IState> {
     thisSeasonData: [],
     lastSeasonDemotedData: [],
     thisSeasonPromotedData: [],
-    latestMatch: null
+    latestMatch: null,
+    loading: false
   }
 
   componentDidMount = async () => {
     try {
+      this.setState({loading: true});
       console.log(this.props.match.params.leagueId, this.props.match.params.teamId);
 
       const teamId = this.props.match.params.teamId;
+      let response = await fetch(`https://raw.githubusercontent.com/openfootball/football.json/master/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
+      let data = await response.json();
 
-      const thisSeasonClubs = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`).clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
-      const lastSeasonClubs = require(`../../assets/data/${LAST_SEASON}/${this.props.match.params.leagueId}.clubs.json`).clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
+      const thisSeasonClubs = data.clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
+      
+      response = await fetch(`https://raw.githubusercontent.com/openfootball/football.json/master/${LAST_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
+      data = await response.json();
+      const lastSeasonClubs = data.clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 
       let commonClubs = _.intersectionBy(lastSeasonClubs, thisSeasonClubs, 'name').filter((element: any) => element.name !== teamId);
 
       let lastSeasonDemotedTeams = _.differenceBy(lastSeasonClubs, thisSeasonClubs, 'name');
       let thisSeasonPromotedTeams = _.differenceBy(thisSeasonClubs, lastSeasonClubs, 'name');
 
-      const lastSeasonMatches = require(`../../assets/data/${LAST_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
+      response = await fetch(`https://raw.githubusercontent.com/openfootball/football.json/master/${LAST_SEASON}/${this.props.match.params.leagueId}.json`);
+      data = await response.json();
+      const lastSeasonMatches = data.matches.filter((a: any) => {
         return a.team1 === teamId || a.team2 === teamId;
       });
-      const thisSeasonMatches = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.json`).matches.filter((a: any) => {
+
+      response = await fetch(`https://raw.githubusercontent.com/openfootball/football.json/master/${THIS_SEASON}/${this.props.match.params.leagueId}.json`);
+      data = await response.json();
+      const thisSeasonMatches = data.matches.filter((a: any) => {
         return a.team1 === teamId || a.team2 === teamId;
       });
 
@@ -386,7 +399,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
           element[key]['isNew'] = true;
         }
       }
-      this.setState({ thisSeasonPromotedData });
+      this.setState({ thisSeasonPromotedData, loading: false });
 
 
     } catch (err) {
@@ -395,8 +408,31 @@ export class TeamContainer extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { lastSeasonData, thisSeasonData, pointChangeData, lastSeasonDemotedData, thisSeasonPromotedData, latestMatch } = this.state;
+    const { lastSeasonData, thisSeasonData, pointChangeData, lastSeasonDemotedData, thisSeasonPromotedData, latestMatch, loading } = this.state;
+    if(loading) {
+      return(
+        <div
+            // style={{
+            //     "text-align": "center",
+            //     "background": "rgba(0, 0, 0, 0.05)",
+            //     "border-radius": "4px",
+            //     "margin-bottom": "20px",
+            //     "padding": "30px 50px",
+            //     "margin": "20px 0",
+            // }}
+            >
+                <Row justify="center" align="middle"
+                    style={{ minHeight: '100vh' }}
+                >
+                    <Spin
+                    size="large"
+                    // style={{ height: '50%' }}
+                    />
+                </Row>
 
+            </div>
+      )
+    }
     return (
       <>
 

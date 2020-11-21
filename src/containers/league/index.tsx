@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, PageHeader, Avatar, Layout } from 'antd';
+import { Row, Col, Card, PageHeader, Avatar, Layout, Spin } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import { RouteComponentProps } from 'react-router-dom';
@@ -18,7 +18,8 @@ interface IProps extends RouteComponentProps<RouterProps> {
 }
 
 interface IState {
-  teams: any[]
+  teams: any[],
+  loading:boolean
 }
 
 const THIS_SEASON = "2020-21";
@@ -27,17 +28,45 @@ export class LeagueContainer extends React.Component<IProps, IState> {
 
   state = {
     teams: [],
+    loading: false
   }
 
   componentDidMount = async () => {
+    this.setState({loading: true});
     console.log(this.props.match.params.leagueId);
-    const data = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
+    const response = await fetch(`https://raw.githubusercontent.com/openfootball/football.json/master/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
+    const data = await response.json();
+    // const data = require(`../../assets/data/${THIS_SEASON}/${this.props.match.params.leagueId}.clubs.json`);
     const clubSorted = data.clubs.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
-    this.setState({ teams: clubSorted })
+    this.setState({ teams: clubSorted, loading: false })
   }
 
   render() {
-    const { teams } = this.state;
+    const { teams, loading} = this.state;
+    if(loading) {
+      return(
+        <div
+            // style={{
+            //     "text-align": "center",
+            //     "background": "rgba(0, 0, 0, 0.05)",
+            //     "border-radius": "4px",
+            //     "margin-bottom": "20px",
+            //     "padding": "30px 50px",
+            //     "margin": "20px 0",
+            // }}
+            >
+                <Row justify="center" align="middle"
+                    style={{ minHeight: '100vh' }}
+                >
+                    <Spin
+                    size="large"
+                    // style={{ height: '50%' }}
+                    />
+                </Row>
+
+            </div>
+      )
+    }
     return (
       <>
         <Layout>
