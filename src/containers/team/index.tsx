@@ -404,6 +404,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
 
     } catch (err) {
       console.log(err);
+      this.setState({ loading: false });
     }
   }
 
