@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, PageHeader, Table, Typography, Layout, Spin } from 'antd';
+import { Row, Col, PageHeader, Table, Typography, Layout, Spin, Alert } from 'antd';
 import { GithubFilled, TwitterSquareFilled } from '@ant-design/icons';
 
 import './styles.less';
@@ -436,7 +436,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
     }
     return (
       <>
-
+        
         <Layout>
           {/* <Header>Header</Header> */}
 
@@ -485,6 +485,25 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 </TelegramShareButton>
               ]}
             />
+            <Row
+              justify="center"
+              align="middle"
+              // style={{ marginTop: 20 }}
+              gutter={[20, 20]}
+            >
+              <Alert style={{marginBottom:20}} 
+                message="Warning" 
+                // description="This fetches data from https://github.com/openfootball/football.json \\n. Ideally data on that source are updated each day." 
+                description={(
+                  <code>
+                    This app fetches data from https://github.com/openfootball/football.json.
+                    <br />
+                    Ideally data on that source are updated each day but it seems that there is some minor issue with update. I hope it will be resolved quickly. 
+                  </code>
+                )}
+                type="warning" 
+                />
+            </Row>
             <Row
               justify="center"
               align="middle"
