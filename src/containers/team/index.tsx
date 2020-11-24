@@ -496,7 +496,7 @@ export class TeamContainer extends React.Component<IProps, IState> {
                 // description="This fetches data from https://github.com/openfootball/football.json \\n. Ideally data on that source are updated each day." 
                 description={(
                   <code>
-                    This app fetches data from https://github.com/openfootball/football.json.
+                    This app fetches data from https://github.com/openfootball/football.json. Issue link: https://github.com/openfootball/football.json/issues/30
                     <br />
                     Ideally data on that source are updated each day but it seems that there is some minor issue with update. I hope it will be resolved quickly. 
                   </code>
