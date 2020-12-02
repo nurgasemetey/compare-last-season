@@ -83,7 +83,11 @@ export class DashboardContainer extends React.Component<IProps, IState> {
                   <code>
                     This app fetches data from https://github.com/openfootball/football.json. Issue link: https://github.com/openfootball/football.json/issues/30
                     <br />
-                    Ideally data on that source are updated each day but it seems that there is some minor issue with update. I hope it will be resolved quickly. 
+                    Ideally, data on that source are updated each day but it seems that there is some minor issue with update. I hope it will be resolved quickly.
+                    <br />
+                    Update on 2020-12-02:
+                    <br />
+                    Issue still persists. Sorry for this. Link: https://github.com/openfootball/england/issues/45
                   </code>
                 )}
                 type="warning" 
